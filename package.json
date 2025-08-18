@@ -8,7 +8,11 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "cursor:site:template": "node scripts/site/init-templates.mjs",
+    "cursor:site:polish": "node scripts/site/build-site.mjs",
+    "cursor:site:check": "node scripts/site/check-geometry.mjs",
+    "cursor:site:oneclick": "node scripts/site/init-templates.mjs && node scripts/site/build-site.mjs && node scripts/site/check-geometry.mjs && git add public && git diff --cached --quiet || git commit -m \"chore(site): polish\" && git pull --rebase && git push"
   },
   "keywords": [
     "react",

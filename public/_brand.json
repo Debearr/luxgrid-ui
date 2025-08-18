@@ -1,0 +1,12 @@
+{
+  "site_title": "Noidlux — Quiet luxury interfaces.",
+  "hero_title": "Quiet luxury interfaces",
+  "hero_subtitle": "Deliberately minimal components for discerning products.",
+  "palette": {
+    "background": "#0B0B0C",
+    "surface": "#121214",
+    "text": "#EAEAEA",
+    "muted": "#9A9AA0",
+    "accent": "#C7A36B"
+  }
+}
