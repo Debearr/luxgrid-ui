@@ -1,0 +1,13 @@
+{
+  "name": "Noidlux",
+  "tagline": "Quiet luxury interfaces for digital experiences.",
+  "email": "founder@noidlux.com",
+  "accent": "#8b5cf6",
+  "hero_title": "Experience Noidlux — where quiet luxury meets digital design.",
+  "hero_subtitle": "We design and build interfaces that feel inevitable.",
+  "gallery": [
+    { "src": "shot1.jpg", "alt": "Project Shot 1" },
+    { "src": "shot2.jpg", "alt": "Project Shot 2" },
+    { "src": "shot3.jpg", "alt": "Project Shot 3" }
+  ]
+}
