@@ -27,6 +27,11 @@ LuxGrid UI provides Fortune-500 polish, accessibility, and modular components ac
 
 ---
 
+## Docs
+- [Automation Safety — Pre-Flight Checklist](docs/automation-preflight-checklist.md)
+
+---
+
 ## Next Steps
 1. Initialize `package.json` with dependencies.  
 2. Add Tailwind + PostCSS config.  
