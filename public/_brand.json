@@ -1,0 +1,38 @@
+{
+  "name": "Noidlux",
+  "tagline": "Quiet luxury interfaces.",
+  "email": "hello@noidlux.com",
+
+  "theme": {
+    "bg": "#0b0f1a",
+    "panel": "#121828",
+    "muted": "#8ca0c8",
+    "text": "#e9efff",
+    "brand": "#6ea0ff",
+    "radius": 16,
+    "maxWidth": 1100,
+    "headerHeight": 72,
+    "gradient": true
+  },
+
+  "seo": {
+    "description": "Quiet-luxury UI and market-grade components.",
+    "ogImage": "/og.png"
+  },
+
+  "content": {
+    "heroTitle": "Welcome to Noidlux",
+    "heroBody": "Deploy a refined static site today. Extend later—no rebuild required.",
+    "features": [
+      { "title": "Fast",   "body": "Static HTML at the edge. No build step." },
+      { "title": "Simple", "body": "Edit one file in GitHub and you're done." },
+      { "title": "Extend", "body": "Add images/JS now, frameworks later." }
+    ]
+  },
+
+  "assets": {
+    "logoAlt": "Noidlux wordmark",
+    "logoOverride": ""
+  }
+}
+

@@ -1,0 +1,6 @@
+{
+  "commands": {
+    "deploy_site_polish": "npm run cursor:site:polish"
+  }
+}
+
