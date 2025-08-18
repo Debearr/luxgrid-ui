@@ -355,8 +355,8 @@ async function main() {
   // Derive palette
   const accent = brand.accent || '#8b5cf6';
   const slug = toSlug(brand.name || 'brand');
-  const logoFile = `logo-${slug}.svg`;
-  const faviconFile = 'favicon.svg';
+  let logoFile = typeof brand.logo === 'string' && brand.logo.trim() ? brand.logo.trim() : `logo-${slug}.svg`;
+  let faviconFile = typeof brand.favicon === 'string' && brand.favicon.trim() ? brand.favicon.trim() : 'favicon.svg';
 
   // Write CSS
   const cssPath = path.join(publicDir, 'styles.css');
@@ -364,13 +364,35 @@ async function main() {
   if (cssRes.changed) console.log(`  wrote ${path.relative(repoRoot, cssRes.filePath)}`);
 
   // Write logo + favicon
+  // Logo: respect override if file exists, else generate
   const logoPath = path.join(publicDir, logoFile);
-  const logoRes = await writeFileIfChanged(logoPath, logoSvg(brand.name, accent, brand.tagline));
-  if (logoRes.changed) console.log(`  wrote ${path.relative(repoRoot, logoRes.filePath)}`);
+  let useGeneratedLogo = false;
+  try {
+    await fs.access(logoPath);
+  } catch {
+    useGeneratedLogo = true;
+  }
+  if (useGeneratedLogo) {
+    const generatedLogoPath = path.join(publicDir, `logo-${slug}.svg`);
+    const logoRes = await writeFileIfChanged(generatedLogoPath, logoSvg(brand.name, accent, brand.tagline));
+    if (logoRes.changed) console.log(`  wrote ${path.relative(repoRoot, logoRes.filePath)}`);
+    logoFile = path.basename(generatedLogoPath);
+  }
 
+  // Favicon: respect override if file exists, else generate
   const faviconPath = path.join(publicDir, faviconFile);
-  const favRes = await writeFileIfChanged(faviconPath, faviconSvg(accent, (brand.name || 'N')[0]));
-  if (favRes.changed) console.log(`  wrote ${path.relative(repoRoot, favRes.filePath)}`);
+  let useGeneratedFavicon = false;
+  try {
+    await fs.access(faviconPath);
+  } catch {
+    useGeneratedFavicon = true;
+  }
+  if (useGeneratedFavicon) {
+    const generatedFaviconPath = path.join(publicDir, 'favicon.svg');
+    const favRes = await writeFileIfChanged(generatedFaviconPath, faviconSvg(accent, (brand.name || 'N')[0]));
+    if (favRes.changed) console.log(`  wrote ${path.relative(repoRoot, favRes.filePath)}`);
+    faviconFile = path.basename(generatedFaviconPath);
+  }
 
   // Write index.html (backup existing once)
   const indexPath = path.join(publicDir, 'index.html');
