@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "scout:validate": "node scripts/generate-validation-report.mjs reports/TEST reports/TEST/market.json"
   },
   "keywords": [
     "react",
@@ -28,6 +29,7 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "zod": "^3.25.76"
   }
 }

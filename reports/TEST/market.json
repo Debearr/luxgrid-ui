@@ -1,0 +1,62 @@
+{
+  "timestamp": "2025-08-18T04:39:37.998Z",
+  "status": "latest",
+  "executive_brief": "Concise weekly summary of market insights.",
+  "scorecard": {
+    "market_fit": 7,
+    "product_readiness": 8,
+    "brand_alignment": 6,
+    "growth_engine": 7,
+    "seo_position": 5,
+    "risk": 4
+  },
+  "opportunities": [
+    {
+      "title": "Expand into SMB fintech",
+      "why_now": "Rising demand and lower CAC observed over last quarter.",
+      "segment": "SMB fintech",
+      "expected_impact": "Increase MRR by 12% over 2 quarters",
+      "confidence": 0.7,
+      "effort_days": 20
+    }
+  ],
+  "top_5_actions": [
+    {
+      "name": "Improve SEO for fintech onboarding",
+      "why": "Low SEO position on priority keywords limits growth",
+      "roi": "high",
+      "difficulty": "med",
+      "deadline_days": 21
+    },
+    {
+      "name": "Partnership outreach to SMB platforms",
+      "why": "Distribution leverage to reduce CAC",
+      "roi": "high",
+      "difficulty": "hard",
+      "deadline_days": 30
+    }
+  ],
+  "seo": {
+    "priority_keywords": [
+      {
+        "keyword": "fintech onboarding",
+        "intent": "commercial",
+        "difficulty": 62,
+        "opportunity": "high"
+      }
+    ]
+  },
+  "social_drip": {
+    "twitter_threads": [
+      {
+        "hook": "The hidden cost of poor fintech onboarding",
+        "beats": [
+          "Data from 500 onboardings",
+          "3 friction points",
+          "ROI math"
+        ],
+        "cta": "Read our guide"
+      }
+    ]
+  }
+}
