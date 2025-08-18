@@ -1,0 +1,8 @@
+{
+  "commands": {
+    "deploy_site_polish": "npm run cursor:site:polish",
+    "check_logo_geometry": "npm run cursor:site:check",
+    "deploy_site_oneclick": "npm run cursor:site:oneclick"
+  }
+}
+

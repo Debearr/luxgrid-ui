@@ -8,7 +8,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "cursor:site:template": "node scripts/site/init-templates.mjs",
+    "cursor:site:polish": "node scripts/site/build-site.mjs",
+    "cursor:site:check": "node scripts/site/check-geometry.mjs",
+    "cursor:site:open": "(xdg-open https://noidlux.com || open https://noidlux.com || start https://noidlux.com)",
+    "cursor:site:oneclick": "npm run cursor:site:template && node scripts/site/build-site.mjs && node scripts/site/check-geometry.mjs && git add public/index.html public/styles.css public/logo-noidlux.svg public/logo-wordmark.svg public/favicon.svg && (git diff --cached --quiet || git commit -m 'chore(site): polish + assets') && git push || true"
   },
   "keywords": [
     "react",
