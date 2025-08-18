@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "pipeline": "node bin/cursor-pipeline.mjs"
   },
   "keywords": [
     "react",
@@ -19,6 +20,9 @@
   ],
   "author": "LuxGrid Team",
   "license": "MIT",
+  "bin": {
+    "cursor-pipeline": "bin/cursor-pipeline.mjs"
+  },
   "devDependencies": {
     "@storybook/react": "^8.0.0",
     "autoprefixer": "^10.4.0",
