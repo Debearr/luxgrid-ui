@@ -1,0 +1,6 @@
+id,title,owner,effort,priority,dueDate,status
+T-001,Define MVP scope,PM,3,High,2025-08-25,Planned
+T-002,Set up CI/CD,DevOps,5,High,2025-08-28,Planned
+T-003,Implement core API,Backend,8,High,2025-09-08,Planned
+T-004,Front-end skeleton,Frontend,5,Medium,2025-09-05,Planned
+T-005,Observability baseline,SRE,3,Medium,2025-09-01,Planned
