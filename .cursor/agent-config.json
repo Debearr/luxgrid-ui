@@ -1,0 +1,34 @@
+{
+  "name": "Market Scout AI Council",
+  "description": "One-click market intelligence (Claude+Gemini+DeepSeek) with validation, deltas, dashboard, and notifications.",
+  "triggers": [
+    "market intelligence",
+    "ai council",
+    "weekly scout",
+    "market scout",
+    "intelligence report",
+    "run market intelligence",
+    "deploy market intelligence"
+  ],
+  "files": {
+    "watch": [
+      "prompts/**/*.txt",
+      "schemas/*.ts",
+      "app/api/market/route.ts",
+      "reports/latest.json"
+    ],
+    "ignore": [
+      "node_modules",
+      ".next",
+      "reports/*/draft.json",
+      "reports/*/validated.json"
+    ]
+  },
+  "commands": {
+    "health_check": "npm run cursor:health",
+    "run_scout": "npm run cursor:scout",
+    "view_dashboard": "npm run cursor:dashboard",
+    "deploy": "npm run cursor:deploy"
+  }
+}
+
