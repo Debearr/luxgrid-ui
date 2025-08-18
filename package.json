@@ -8,7 +8,15 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "cursor:health": "node scripts/cursor-health-check.mjs",
+    "cursor:dev": "npm run cursor:health && npm run dev",
+    "cursor:scout": "node scripts/market-scout.js --role researcher --system-prompt prompts/system.txt --user-prompt prompts/user.txt --output reports/test.json",
+    "cursor:validate": "node scripts/generate-validation-report.js reports/test reports/test.json",
+    "cursor:dashboard": "npm run dev & sleep 3 && (xdg-open http://localhost:3000/dashboard/market || open http://localhost:3000/dashboard/market || start http://localhost:3000/dashboard/market)",
+    "cursor:deploy": "npm run cursor:health && git add -A && git commit -m \"deploy: cursor market scout\" || echo \"No changes\" && git push",
+    "cursor:site:polish": "node scripts/site-polish.mjs",
+    "cursor:site:open": "(xdg-open https://noidlux.com || open https://noidlux.com || start https://noidlux.com)"
   },
   "keywords": [
     "react",

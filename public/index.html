@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Noidlux — Quiet luxury interfaces.</title>
+  <meta name="description" content="Noidlux crafts quiet-luxury UI and market-grade components. Simple. Fast. Elegant."/>
+  <meta property="og:title" content="Noidlux — Quiet luxury interfaces."/>
+  <meta property="og:description" content="Quiet-luxury UI and market-grade components."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:image" content="/favicon.svg"/>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+  <link rel="stylesheet" href="/styles.css"/>
+  <meta name="theme-color" content="#0b0f1a"/>
+  <meta name="robots" content="index,follow"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Noidlux — Quiet luxury interfaces."/>
+  <meta name="twitter:description" content="Quiet-luxury UI and market-grade components."/>
+  <meta name="twitter:image" content="/favicon.svg"/>
+  <link rel="canonical" href="https://noidlux.com/"/>
+</head>
+<body>
+  <!-- Sticky header; rocket removed -->
+  <header class="header">
+    <div class="container wrap">
+      <div class="brand">
+        <img src="/logo-noidlux.svg" alt="Noidlux logo"/>
+        <div>
+          <div class="name">Noidlux</div>
+          <div class="tag">Quiet luxury interfaces.</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="#features">Features</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero (no emoji, no top cutoff) -->
+    <section class="hero">
+      <div class="card">
+        <div>
+          <h1>Welcome to Noidlux</h1>
+          <p>Deploy a refined, static site today. Extend later with frameworks—no rebuild required.</p>
+          <div class="cta" style="margin-top:12px">
+            <a class="primary" href="#features">Explore Features</a>
+            <a href="#gallery">See Gallery</a>
+            <small>Deployed on Vercel • <code>public/index.html</code></small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="section">
+      <div class="panel">
+        <h2>Features</h2>
+        <div class="grid cols-3">
+          <div class="card"><b>Fast</b><br/>Static HTML at the edge. No build step.</div>
+          <div class="card"><b>Simple</b><br/>Edit one file in GitHub and you're done.</div>
+          <div class="card"><b>Extend</b><br/>Add images/JS now, frameworks later.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery" class="section">
+      <div class="panel">
+        <h2>Gallery</h2>
+        <div class="grid cols-3">
+          <div class="card">
+            <div class="placeholder">Drop <code>/shot1.jpg</code> into <code>public/</code> and replace me.</div>
+          </div>
+          <div class="card">
+            <div class="placeholder">Drop <code>/shot2.jpg</code> into <code>public/</code> and replace me.</div>
+          </div>
+          <div class="card">
+            <div class="placeholder">Drop <code>/shot3.jpg</code> into <code>public/</code> and replace me.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+      <div class="panel">
+        <h2>Contact</h2>
+        <p>Swap this for your email: <a href="mailto:hello@noidlux.com">hello@noidlux.com</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © <span id="y"></span> Noidlux • Built with HTML
+  </footer>
+
+  <script>
+    // set year; no frameworks
+    document.getElementById('y').textContent = new Date().getFullYear()
+  </script>
+</body>
+</html>
