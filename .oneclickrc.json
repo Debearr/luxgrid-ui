@@ -1,0 +1,21 @@
+{
+	"charBudget": 180000,
+	"runMode": "auto",
+	"enableCaching": true,
+	"redact": [
+		"AKIA[0-9A-Z]{16}",
+		"sk-[A-Za-z0-9]{20,}",
+		"(?i)password\\s*[:=]\\s*\\S+"
+	],
+	"fileGlobs": [
+		"package.json",
+		"README.md",
+		"tsconfig.json",
+		"app/**",
+		"lib/**",
+		"src/**",
+		"docs/**"
+	],
+	"maxSliceBytes": 150000
+}
+
