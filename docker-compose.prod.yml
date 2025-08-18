@@ -1,0 +1,41 @@
+version: "3.8"
+services:
+  redis:
+    image: redis:7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
+
+  vc-dashboard:
+    build: .
+    image: vc-pipeline:latest
+    command: ["node", "scripts/dashboard-server.mjs"]
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - EVENTS_CHANNEL=vc:events
+      - DASHBOARD_PORT=3001
+    depends_on:
+      - redis
+    ports:
+      - "3001:3001"
+
+  vc-pipeline:
+    build: .
+    image: vc-pipeline:latest
+    command: ["node", "scripts/enterprise-pipeline.mjs"]
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - EVENTS_CHANNEL=vc:events
+      - JOB_QUEUE_KEY=vc:jobs
+      - CONCURRENCY=4
+      - HEALTH_PORT=8081
+    depends_on:
+      - redis
+    ports:
+      - "8081:8081"
+
+volumes:
+  redisdata:
+
