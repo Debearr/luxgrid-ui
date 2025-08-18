@@ -1,0 +1,39 @@
+name: site-polish-on-commit
+
+on:
+  push:
+    branches: ["**"]
+    paths:
+      - "public/**"
+      - "scripts/site-polish.mjs"
+      - ".github/workflows/site-polish-on-commit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run site polish
+        run: node scripts/site-polish.mjs
+
+      - name: Commit changes (if any)
+        run: |
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore: auto-polish site"
+            git push
+          fi
+

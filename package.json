@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "cursor:site:polish": "node scripts/site-polish.mjs",
+    "cursor:site:open": "(xdg-open https://noidlux.com || open https://noidlux.com || start https://noidlux.com)"
   },
   "keywords": [
     "react",
