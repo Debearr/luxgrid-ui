@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body, #root { height: 100%; }
+body { background: #0a0e1a; }
+
 /* Accessibility defaults */
 :focus { outline: none; }
 :focus-visible { @apply ring-2 ring-blue-400; }
