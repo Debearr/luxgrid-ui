@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Noidlux monogram">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#9fb7ff" offset="0"/><stop stop-color="#7aa7ff" offset=".5"/><stop stop-color="#3f79ff" offset="1"/></linearGradient></defs>
+  <rect width="256" height="256" rx="40" fill="url(#g)"/>
+  <g fill="none" stroke="#fff" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M64 64 L64 192 M64 192 L160 64 M160 64 L160 192" stroke-width="18"/>
+    <circle cx="196" cy="128" r="44" stroke-width="18"/>
+    <path d="M164 96 L228 160" stroke-width="14"/>
+  </g>
+  </svg>
