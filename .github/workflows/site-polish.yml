@@ -1,0 +1,45 @@
+name: Site Polish
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Init templates if missing
+        run: node scripts/site/init-templates.mjs
+
+      - name: Build site
+        run: node scripts/site/build-site.mjs
+
+      - name: Geometry check
+        run: node scripts/site/check-geometry.mjs
+
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public
+          git diff --cached --quiet || git commit -m "chore(site): polish (CI)"
+
+      - name: Pull (rebase) and push
+        run: |
+          git pull --rebase
+          git push
