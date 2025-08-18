@@ -28,7 +28,8 @@
     "health_check": "npm run cursor:health",
     "run_scout": "npm run cursor:scout",
     "view_dashboard": "npm run cursor:dashboard",
-    "deploy": "npm run cursor:deploy"
+    "deploy": "npm run cursor:deploy",
+    "deploy_site_polish": "npm run cursor:site:polish"
   }
 }
 
