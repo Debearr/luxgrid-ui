@@ -1,54 +1,114 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Noidlux</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NØID – Drive Unseen. Tap Less. Earn Smart.</title>
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="alternate icon" type="image/png" href="/favicon.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300;400;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="/styles.css" />
-  <meta name="description" content="Quick starter site" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Styles -->
+  <style>
+    body {
+      font-family: 'Helvetica Neue', sans-serif;
+      background-color: #000;
+      color: #fff;
+    }
+    .gold-text {
+      background: linear-gradient(90deg, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .barcode {
+      font-family: monospace;
+      letter-spacing: 0.2em;
+    }
+  </style>
 </head>
-<body>
-  <header class="wrap hero">
-    <h1>Welcome to Noidlux</h1>
-    <p class="muted">Your site is live!</p>
-    <nav class="tabs">
-      <a href="#features">Features</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#contact">Contact</a>
+<body class="flex flex-col min-h-screen">
+  <!-- Header -->
+  <header class="p-6 flex justify-between items-center bg-black/70 backdrop-blur-md fixed top-0 w-full z-50">
+    <h1 class="text-2xl font-bold gold-text">NØID</h1>
+    <nav class="space-x-6 text-white">
+      <a href="#features" class="hover:text-teal-400">Features</a>
+      <a href="#dashboard" class="hover:text-teal-400">Dashboard</a>
+      <a href="#founder" class="hover:text-teal-400">Founder</a>
+      <a href="#contact" class="hover:text-teal-400">Contact</a>
     </nav>
   </header>
 
-  <main class="wrap">
-    <section id="features">
-      <h2>Features</h2>
-      <ul class="cards">
-        <li><strong>⚡ Fast</strong></li>
-        <li><strong>✅ Simple</strong></li>
-        <li><strong>📦 Extend</strong></li>
-      </ul>
-    </section>
+  <!-- Hero -->
+  <section class="flex flex-col justify-center items-center text-center min-h-screen px-6">
+    <h2 class="text-5xl md:text-7xl font-bold gold-text mb-4">Drive Unseen.</h2>
+    <p class="text-xl md:text-2xl mb-6">Tap Less. Earn Smart.</p>
+    <a href="#features" class="px-6 py-3 bg-teal-500 text-black rounded-full text-lg font-semibold hover:bg-teal-400 transition">
+      Explore Features
+    </a>
+  </section>
 
-    <section id="gallery">
-      <h2>Gallery</h2>
-      <div class="cards">
-        <div>Drop <code>/public/shot1.png</code></div>
-        <div>Drop <code>/public/shot2.png</code></div>
-        <div>Drop <code>/public/shot3.png</code></div>
+  <!-- Features -->
+  <section id="features" class="py-20 px-6 bg-black">
+    <h3 class="text-4xl font-bold text-center mb-12">Core Features</h3>
+    <div class="grid md:grid-cols-3 gap-10 max-w-6xl mx-auto">
+      <div class="p-6 bg-neutral-900 rounded-2xl shadow-lg hover:scale-105 transition">
+        <h4 class="text-2xl font-bold gold-text mb-4">Smart Filters</h4>
+        <p>Auto-accept only the offers that match your goals. Avoid low pay, long drives, and heavy lifting.</p>
       </div>
-    </section>
+      <div class="p-6 bg-neutral-900 rounded-2xl shadow-lg hover:scale-105 transition">
+        <h4 class="text-2xl font-bold gold-text mb-4">Stealth Mode</h4>
+        <p>Stay under the radar while maximizing efficiency with mock location and smart cooldown logic.</p>
+      </div>
+      <div class="p-6 bg-neutral-900 rounded-2xl shadow-lg hover:scale-105 transition">
+        <h4 class="text-2xl font-bold gold-text mb-4">Shift Planner</h4>
+        <p>Set your earning target or time window. Let NØID calculate how to hit your goals, hands-free.</p>
+      </div>
+    </div>
+  </section>
 
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>Swap this for your email: <a href="#">email@example.com</a></p>
-    </section>
-  </main>
+  <!-- Dashboard Preview -->
+  <section id="dashboard" class="py-20 px-6 bg-neutral-950">
+    <h3 class="text-4xl font-bold text-center mb-12">Dashboard Preview</h3>
+    <div class="max-w-4xl mx-auto bg-neutral-900 p-8 rounded-2xl shadow-lg">
+      <img src="assets/dashboard-mockup.png" alt="Dashboard Mockup" class="rounded-xl shadow-lg">
+    </div>
+  </section>
 
-  <footer class="wrap foot">© 2025 Noidlux</footer>
+  <!-- Founder Section -->
+  <section id="founder" class="py-20 px-6 bg-black">
+    <h3 class="text-4xl font-bold text-center mb-12">Meet the Founder</h3>
+    <div class="max-w-3xl mx-auto text-center">
+      <img src="assets/debear-headshot.png" alt="De Bear Headshot" class="w-48 h-48 rounded-full mx-auto mb-6 shadow-lg">
+      <p class="text-lg leading-relaxed">
+        De Bear, founder of NØID, blends luxury design with street disruptor energy.  
+        From luxury sales on cruise ships to advanced gig-driver automation, his mission is clear:  
+        **empower drivers to earn smarter, not harder.**
+      </p>
+      <p class="mt-4 text-sm barcode">|| ||| |||| || |||</p>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 px-6 bg-neutral-950">
+    <h3 class="text-4xl font-bold text-center mb-12">Get in Touch</h3>
+    <div class="max-w-xl mx-auto">
+      <form class="flex flex-col gap-6">
+        <input type="text" placeholder="Your Name" class="p-4 rounded-xl bg-neutral-900 text-white" />
+        <input type="email" placeholder="Your Email" class="p-4 rounded-xl bg-neutral-900 text-white" />
+        <textarea placeholder="Your Message" class="p-4 rounded-xl bg-neutral-900 text-white h-32"></textarea>
+        <button type="submit" class="px-6 py-3 bg-teal-500 text-black rounded-full font-semibold hover:bg-teal-400 transition">
+          Send Message
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-6 text-center bg-black text-sm text-gray-400">
+    © 2025 NØID. Drive Unseen. Tap Less. Earn Smart.
+  </footer>
 </body>
 </html>
