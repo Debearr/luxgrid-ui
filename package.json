@@ -8,7 +8,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "vc:dashboard": "node scripts/dashboard-server.mjs",
+    "vc:run": "node scripts/enterprise-pipeline.mjs"
   },
   "keywords": [
     "react",
@@ -27,7 +29,12 @@
     "vite": "^5.0.0"
   },
   "dependencies": {
+    "ajv": "^8.17.1",
+    "chart.js": "^4.5.0",
+    "puppeteer": "^22.15.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "redis": "^4.7.1",
+    "ws": "^8.18.3"
   }
 }
