@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Execution Dashboard</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 24px; color: #0f172a; }
+    h1 { font-size: 22px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .card { border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; background: #fff; box-shadow: 0 1px 2px rgba(16,24,40,.05); }
+    .kpi { font-size: 28px; font-weight: 700; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border-bottom: 1px solid #e2e8f0; padding: 8px; text-align: left; font-size: 14px; }
+    th { background: #f8fafc; }
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 12px; }
+    .pill.High { background: #fee2e2; color: #991b1b; }
+    .pill.Medium { background: #fef3c7; color: #92400e; }
+    .pill.Low { background: #dcfce7; color: #166534; }
+  </style>
+  </head>
+  <body>
+    <h1>Execution Dashboard</h1>
+    <div class="grid">
+      <div class="card"><div>Objectives</div><div class="kpi">3</div></div>
+      <div class="card"><div>Milestones</div><div class="kpi">3</div></div>
+      <div class="card"><div>Tasks</div><div class="kpi">5</div></div>
+      <div class="card"><div>Availability Target</div><div class="kpi">99.9%</div></div>
+    </div>
+    <h2>Tasks</h2>
+    <div class="card">
+      <table>
+        <thead><tr><th>ID</th><th>Title</th><th>Owner</th><th>Priority</th><th>Due</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>T-001</td><td>Define MVP scope</td><td>PM</td><td><span class="pill High">High</span></td><td>2025-08-25</td><td>Planned</td></tr><tr><td>T-002</td><td>Set up CI/CD</td><td>DevOps</td><td><span class="pill High">High</span></td><td>2025-08-28</td><td>Planned</td></tr><tr><td>T-003</td><td>Implement core API</td><td>Backend</td><td><span class="pill High">High</span></td><td>2025-09-08</td><td>Planned</td></tr><tr><td>T-004</td><td>Front-end skeleton</td><td>Frontend</td><td><span class="pill Medium">Medium</span></td><td>2025-09-05</td><td>Planned</td></tr><tr><td>T-005</td><td>Observability baseline</td><td>SRE</td><td><span class="pill Medium">Medium</span></td><td>2025-09-01</td><td>Planned</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
