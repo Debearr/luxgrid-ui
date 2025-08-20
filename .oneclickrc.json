@@ -1,0 +1,24 @@
+{
+  "contextRules": {
+    "alwaysInclude": [
+      "package.json",
+      "README*",
+      "tsconfig*"
+    ],
+    "businessLogic": [
+      "app/**/*.ts",
+      "lib/**/*.ts",
+      "api/**"
+    ],
+    "infrastructure": [
+      "Dockerfile",
+      "*.yml",
+      "vercel.json"
+    ],
+    "dropFirst": [
+      "**/*.test.*",
+      "**/*.spec.*",
+      "**/migrations/*"
+    ]
+  }
+}
