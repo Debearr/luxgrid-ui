@@ -8,7 +8,13 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "vc:run": "node scripts/enterprise-pipeline.mjs",
+    "vc:run:high-priority": "node scripts/enterprise-pipeline.mjs --high-priority --realtime",
+    "vc:monitor": "node scripts/monitor-pipeline.mjs",
+    "vc:dashboard": "node scripts/dashboard-server.mjs",
+    "vc:test": "node scripts/test-pipeline.mjs",
+    "vc:benchmark": "node scripts/benchmark-pipeline.mjs"
   },
   "keywords": [
     "react",
@@ -28,6 +34,11 @@
   },
   "dependencies": {
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "ajv": "^8.12.0",
+    "chart.js": "^4.4.0",
+    "puppeteer": "^21.0.0",
+    "redis": "^4.6.0",
+    "ws": "^8.14.0"
   }
 }
