@@ -1,0 +1,160 @@
+{
+  "timestamp": "2025-01-01T12:00:00.000Z",
+  "executive_brief": "Initial seed dataset for the AI Council dashboard. Replace via GitHub Action output. Focus on premium UX, measurable growth levers, and risk-aware execution.",
+  "scorecard": {
+    "market_fit": 6,
+    "product_readiness": 7,
+    "brand_alignment": 8,
+    "growth_engine": 5,
+    "seo_position": 4,
+    "risk": 5
+  },
+  "opportunities": [
+    {
+      "title": "Partner bundles with pro creators",
+      "why_now": "High creator tool churn; bundle reduces switching friction and improves ARPU",
+      "segment": "Pro creators & studios",
+      "expected_impact": "revenue",
+      "confidence": 0.7,
+      "effort_days": 10,
+      "proofs": ["Comparable bundle uplift at peer platforms", "Early partner interest"]
+    },
+    {
+      "title": "LuxGrid UI showcase microsite",
+      "why_now": "Demand for premium UI kits; showcase drives brand search and qualified leads",
+      "segment": "Design-forward startups",
+      "expected_impact": "brand",
+      "confidence": 0.65,
+      "effort_days": 5,
+      "proofs": ["Portfolio sites correlate with inbound spikes"]
+    }
+  ],
+  "optimizations": [
+    {
+      "area": "Onboarding",
+      "action": "Add 90-second guided tour with role presets",
+      "metric": "Day-1 activation rate",
+      "target": "≥ 55%",
+      "owner": "Product",
+      "eta_days": 5
+    },
+    {
+      "area": "Messaging",
+      "action": "Refine hero to emphasize reliability + luxury craft",
+      "metric": "Homepage CTR to signup",
+      "target": "+20%",
+      "owner": "Brand",
+      "eta_days": 3
+    }
+  ],
+  "seo": {
+    "priority_keywords": [
+      { "keyword": "luxury ui components", "intent": "informational", "difficulty": 42, "opportunity": "high" },
+      { "keyword": "voice trading assistant", "intent": "transactional", "difficulty": 55, "opportunity": "med" },
+      { "keyword": "premium react ui kit", "intent": "informational", "difficulty": 47, "opportunity": "high" }
+    ],
+    "content_calendar": [
+      { "title": "Designing for Quiet Luxury in UI", "angle": "Minimalism + precision", "channel": "Blog", "cadence": "weekly", "kpi": "rank" }
+    ]
+  },
+  "social_drip": {
+    "twitter_threads": [
+      {
+        "hook": "Quiet luxury in product design wins trust.",
+        "beats": ["Minimize cognitive load", "Prioritize tactile feedback", "Use restrained motion"],
+        "cta": "See how LuxGrid implements this standard."
+      }
+    ]
+  },
+  "risks": [
+    { "name": "AI vendor instability", "likelihood": "med", "impact": "high", "mitigation": "Abstract via provider-agnostic client + canary tests" }
+  ],
+  "top_5_actions": [
+    { "name": "Ship onboarding tour", "why": "Boost activation and reduce support load", "roi": "high", "difficulty": "easy", "deadline_days": 7 },
+    { "name": "Publish LuxGrid showcase", "why": "Drives brand equity + organic leads", "roi": "med", "difficulty": "med", "deadline_days": 14 },
+    { "name": "Creator bundle outreach", "why": "Validates pricing and partner demand", "roi": "high", "difficulty": "med", "deadline_days": 30 },
+    { "name": "SEO landing for 'premium react ui kit'", "why": "Capture intent traffic early", "roi": "med", "difficulty": "easy", "deadline_days": 14 },
+    { "name": "Reliability canary checks", "why": "Reduce vendor risk and outages", "roi": "high", "difficulty": "easy", "deadline_days": 7 }
+  ]
+}
+
+{
+  "timestamp": "2025-01-01T12:00:00.000Z",
+  "executive_brief": "Initial seed dataset for the AI Council dashboard. Replace via GitHub Action output. Focus on premium UX, measurable growth levers, and risk-aware execution.",
+  "scorecard": {
+    "market_fit": 6,
+    "product_readiness": 7,
+    "brand_alignment": 8,
+    "growth_engine": 5,
+    "seo_position": 4,
+    "risk": 5
+  },
+  "opportunities": [
+    {
+      "title": "Partner bundles with pro creators",
+      "why_now": "High creator tool churn; bundle reduces switching friction and improves ARPU",
+      "segment": "Pro creators & studios",
+      "expected_impact": "revenue",
+      "confidence": 0.7,
+      "effort_days": 10,
+      "proofs": ["Comparable bundle uplift at peer platforms", "Early partner interest"]
+    },
+    {
+      "title": "LuxGrid UI showcase microsite",
+      "why_now": "Demand for premium UI kits; showcase drives brand search and qualified leads",
+      "segment": "Design-forward startups",
+      "expected_impact": "brand",
+      "confidence": 0.65,
+      "effort_days": 5,
+      "proofs": ["Portfolio sites correlate with inbound spikes"]
+    }
+  ],
+  "optimizations": [
+    {
+      "area": "Onboarding",
+      "action": "Add 90-second guided tour with role presets",
+      "metric": "Day-1 activation rate",
+      "target": "≥ 55%",
+      "owner": "Product",
+      "eta_days": 5
+    },
+    {
+      "area": "Messaging",
+      "action": "Refine hero to emphasize reliability + luxury craft",
+      "metric": "Homepage CTR to signup",
+      "target": "+20%",
+      "owner": "Brand",
+      "eta_days": 3
+    }
+  ],
+  "seo": {
+    "priority_keywords": [
+      { "keyword": "luxury ui components", "intent": "informational", "difficulty": 42, "opportunity": "high" },
+      { "keyword": "voice trading assistant", "intent": "transactional", "difficulty": 55, "opportunity": "med" },
+      { "keyword": "premium react ui kit", "intent": "informational", "difficulty": 47, "opportunity": "high" }
+    ],
+    "content_calendar": [
+      { "title": "Designing for Quiet Luxury in UI", "angle": "Minimalism + precision", "channel": "Blog", "cadence": "weekly", "kpi": "rank" }
+    ]
+  },
+  "social_drip": {
+    "twitter_threads": [
+      {
+        "hook": "Quiet luxury in product design wins trust.",
+        "beats": ["Minimize cognitive load", "Prioritize tactile feedback", "Use restrained motion"],
+        "cta": "See how LuxGrid implements this standard."
+      }
+    ]
+  },
+  "risks": [
+    { "name": "AI vendor instability", "likelihood": "med", "impact": "high", "mitigation": "Abstract via provider-agnostic client + canary tests" }
+  ],
+  "top_5_actions": [
+    { "name": "Ship onboarding tour", "why": "Boost activation and reduce support load", "roi": "high", "difficulty": "easy", "deadline_days": 7 },
+    { "name": "Publish LuxGrid showcase", "why": "Drives brand equity + organic leads", "roi": "med", "difficulty": "med", "deadline_days": 14 },
+    { "name": "Creator bundle outreach", "why": "Validates pricing and partner demand", "roi": "high", "difficulty": "med", "deadline_days": 30 },
+    { "name": "SEO landing for 'premium react ui kit'", "why": "Capture intent traffic early", "roi": "med", "difficulty": "easy", "deadline_days": 14 },
+    { "name": "Reliability canary checks", "why": "Reduce vendor risk and outages", "roi": "high", "difficulty": "easy", "deadline_days": 7 }
+  ]
+}
+

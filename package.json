@@ -20,6 +20,7 @@
   "author": "LuxGrid Team",
   "license": "MIT",
   "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.0",
     "@storybook/react": "^8.0.0",
     "autoprefixer": "^10.4.0",
     "postcss": "^8.4.0",
