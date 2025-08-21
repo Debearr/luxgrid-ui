@@ -1,0 +1,43 @@
+{
+  "templates": {
+    "luxury-saas": {
+      "stack": ["nextjs", "tailwind", "shadcn/ui", "vercel"],
+      "features": ["subscription-billing", "auth", "ai-copilot", "analytics"],
+      "branding": "luxury",
+      "tokens": "~/.noid/brand-tokens.json"
+    },
+    "ai-first": {
+      "stack": ["fastapi", "pytorch", "postgres", "cursor-ai"],
+      "features": ["ml-training", "ocr", "predictive-engine", "realtime-api"],
+      "branding": "ai",
+      "tokens": "~/.noid/brand-tokens.json"
+    },
+    "marketplace": {
+      "stack": ["nextjs", "supabase", "stripe-connect", "graphql"],
+      "features": ["multi-vendor", "reviews", "recommendations", "wallet"],
+      "branding": "marketplace",
+      "tokens": "~/.noid/brand-tokens.json"
+    },
+    "landing-page": {
+      "stack": ["nextjs", "tailwind", "vercel"],
+      "sections": ["hero", "features", "testimonials", "pricing", "contact"],
+      "copy": {
+        "tagline": "Drive Unseen. Tap Less. Earn Smart.",
+        "cta": "Get Started Today",
+        "subcopy": "The luxury-meets-street disruptor platform for drivers, investors, and businesses who refuse to settle for average."
+      },
+      "branding": "luxury",
+      "tokens": "~/.noid/brand-tokens.json"
+    }
+  },
+  "deployment": {
+    "hosting": "Vercel",
+    "ci_cd": "GitHub Actions",
+    "monitoring": ["Sentry", "LogRocket"],
+    "auto_branding": true,
+    "auto_padding_fix": true,
+    "repo_provider": "GitHub",
+    "ide": "Cursor"
+  }
+}
+
