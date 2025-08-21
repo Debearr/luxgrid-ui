@@ -1,0 +1,8 @@
+{
+  "colors": { "black":"#0A0A0A", "graphite":"#1A1A1A", "gold":"#FFD700", "pulse":"#00FF88", "gray":"#7A7A7A" },
+  "spacing": [4,8,12,16,24,32,48,64],
+  "radii": [6,10,14,20,24,28],
+  "motion": { "durationMs": [180,240], "easing": "ease-in-out" },
+  "modes": ["A_institutional", "B_disruptor"],
+  "signature": { "barcode": "enabled", "watermark": "DeBear" }
+}
