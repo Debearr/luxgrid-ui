@@ -1,0 +1,20 @@
+{
+  "name": "NOID_Driver_Agent",
+  "description": "Driver automation and stealth optimization specialist", 
+  "workspace_scope": ["src/noid", "src/driver", "src/automation"],
+  "file_patterns": ["*.ts", "*.tsx", "*.js", "*.json"],
+  "triggers": {
+    "on_save": ["stealth_validation", "safety_check"],
+    "on_commit": ["route_optimization", "earnings_calculation"],
+    "real_time": {
+      "offer_analysis": true,
+      "safety_monitoring": true
+    }
+  },
+  "auto_actions": {
+    "route_optimization": true,
+    "offer_filtering": true,
+    "stealth_mode_toggle": true,
+    "privacy_protection": true
+  }
+}

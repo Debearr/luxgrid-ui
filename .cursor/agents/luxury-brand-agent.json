@@ -1,0 +1,20 @@
+{
+  "name": "Luxury_Brand_Agent",
+  "description": "Premium brand consistency and quality guardian",
+  "workspace_scope": ["src/components", "src/styles", "src/assets"],
+  "file_patterns": ["*.tsx", "*.css", "*.scss", "*.svg", "*.json"],
+  "triggers": {
+    "on_save": ["brand_compliance", "luxury_metrics"],
+    "on_ui_change": ["consistency_check", "barcode_validation"],
+    "quality_control": {
+      "animation_performance": "continuous",
+      "interaction_refinement": "continuous"
+    }
+  },
+  "auto_actions": {
+    "color_enforcement": true,
+    "typography_standardization": true,
+    "barcode_integration": true,
+    "luxury_optimization": true
+  }
+}
