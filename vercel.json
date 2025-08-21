@@ -1,6 +1,17 @@
 {
   "version": 2,
   "framework": "nextjs",
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "devCommand": "next dev",
+  "cleanUrls": true,
+  "trailingSlash": false
+}
+
+{
+  "version": 2,
+  "framework": "nextjs",
   "env": {
     "AI_COUNCIL_ENABLED": "true",
     "ZERO_TOUCH_DEPLOY": "true",
