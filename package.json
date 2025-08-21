@@ -8,7 +8,19 @@
     "build": "vite build",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test": "echo \"No tests configured\"",
+    "test:ci": "echo \"No CI tests configured\"",
+    "council:run": "node automation/run-council.js",
+    "council:status": "node automation/council-status.js",
+    "deploy:staging": "vercel --target staging",
+    "deploy:production": "vercel --prod",
+    "brand:validate": "node automation/brand-check.js",
+    "performance:audit": "echo \"Performance audit not configured\"",
+    "security:scan": "npm audit --audit-level high || true",
+    "optimize:bundle": "echo \"Bundle analyzer not configured\"",
+    "automation:setup": "node automation/setup.js",
+    "automation:status": "node automation/monitor.js"
   },
   "keywords": [
     "react",

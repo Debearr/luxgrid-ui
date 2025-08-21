@@ -1,6 +1,20 @@
 {
+  "version": 2,
   "framework": null,
-  "buildCommand": "",
-  "installCommand": "",
-  "outputDirectory": "public"
+  "builds": [
+    { "src": "package.json", "use": "@vercel/static-build" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/$1" }
+  ],
+  "env": {
+    "AI_COUNCIL_ENABLED": "true",
+    "AUTO_DEPLOYMENT": "true",
+    "BRAND_VALIDATION": "true",
+    "LUXURY_MODE": "true",
+    "ZERO_TOUCH_DEPLOY": "true"
+  },
+  "regions": ["iad1", "sfo1"],
+  "cleanUrls": true,
+  "trailingSlash": false
 }
