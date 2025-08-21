@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --global-pad: 24px;
+  --gold: #FFD700;
+  --gold-hover: #FFE55C;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+main {
+  padding-top: var(--global-pad);
+  padding-bottom: var(--global-pad);
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+}
+
+footer {
+  padding-bottom: calc(var(--global-pad) * 1.5);
+}
+
+/* Smooth animations */
+* {
+  transition: border-color 0.3s ease;
+}
+
+/* Prevent horizontal scroll */
+body {
+  overflow-x: hidden;
+}
+
