@@ -1,3 +1,5 @@
+import "./globals.css";
+
 export const metadata = {
 	title: "LuxGrid UI",
 	description: "Luxury identity OS: NØID, AuraFX, Noidlux, PostPilot",
@@ -6,7 +8,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
-			<body className="min-h-screen bg-black text-white">
+			<body>
 				{children}
 			</body>
 		</html>
