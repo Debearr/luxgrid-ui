@@ -1,0 +1,6 @@
+{
+	"task": "Optimize NØID component for luxury brand standards",
+	"models": ["claude", "deepseesk", "gemini", "copilot", "perplexity"],
+	"criteria": ["performance", "accessibility", "brand_consistency", "cost"],
+	"output": "ranked_solutions_with_reasoning"
+}

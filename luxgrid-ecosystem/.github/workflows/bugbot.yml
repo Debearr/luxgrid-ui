@@ -1,0 +1,14 @@
+name: Bugbot Elite
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/bugbot
+        with:
+          lighthouse-budget: performance:85,accessibility:90
+          auto-fix: lint,format,imports
+          ai-review: deepseesk
