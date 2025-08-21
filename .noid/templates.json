@@ -1,0 +1,70 @@
+{
+  "$schema": "https://noid-specs.dev/templates.schema.json",
+  "version": "1.0.0",
+  "templates": [
+    {
+      "id": "luxury-saas",
+      "name": "Luxury SaaS",
+      "description": "Next.js 14 App Router, Prisma, tRPC, Tailwind, Shadcn, Stripe, Postgres, Auth.js; CI/CD: GitHub Actions → Vercel; council hooks pre-wired.",
+      "repo": "Debearr/luxgrid-ui-template",
+      "branch": "main",
+      "scaffold": {
+        "packageManager": "pnpm",
+        "features": ["app-router","trpc","prisma","authjs","stripe","tailwind","shadcn","i18n"],
+        "initCommands": [
+          "pnpm install",
+          "pnpm dlx shadcn-ui@latest init -y || true",
+          "pnpm prisma generate"
+        ]
+      },
+      "cicd": {
+        "workflows": [
+          ".github/workflows/council-to-deployment.yml",
+          ".github/workflows/status-surface.yml"
+        ]
+      }
+    },
+    {
+      "id": "ai-first",
+      "name": "AI-First App",
+      "description": "Next.js 14, Vercel AI SDK, RSC Actions, OpenAI + Anthropic switch, Supabase vector, LangChain/Toolformer optional.",
+      "repo": "Debearr/luxgrid-ai-template",
+      "branch": "main",
+      "scaffold": {
+        "packageManager": "pnpm",
+        "features": ["ai-sdk","rsc-actions","supabase","vector-search","rate-limit","sentry"],
+        "initCommands": [
+          "pnpm install",
+          "pnpm prisma generate || true"
+        ]
+      },
+      "cicd": {
+        "workflows": [
+          ".github/workflows/council-to-deployment.yml",
+          ".github/workflows/status-surface.yml"
+        ]
+      }
+    },
+    {
+      "id": "marketplace",
+      "name": "Marketplace",
+      "description": "Remix or Next.js monorepo with Turborepo, Stripe Connect, Seller onboarding, Webhooks, PlanetScale or Neon.",
+      "repo": "Debearr/luxgrid-marketplace-template",
+      "branch": "main",
+      "scaffold": {
+        "packageManager": "pnpm",
+        "features": ["turborepo","stripe-connect","webhooks","seller-onboarding","prisma"],
+        "initCommands": [
+          "pnpm install",
+          "pnpm prisma generate || true"
+        ]
+      },
+      "cicd": {
+        "workflows": [
+          ".github/workflows/council-to-deployment.yml",
+          ".github/workflows/status-surface.yml"
+        ]
+      }
+    }
+  ]
+}
