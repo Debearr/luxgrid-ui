@@ -33,6 +33,7 @@ LuxGrid UI provides Fortune-500 polish, accessibility, and modular components ac
 3. Create `src/components` folder with first component (`Button`).  
 4. Add Storybook for component documentation.  
 5. Setup GitHub Actions CI/CD for quality checks.  
+6. Zero-Touch Deployment: run `npm run automation:setup` and configure secrets `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `VERCEL_TOKEN` in repository settings to enable the AI Council → PR → Vercel pipeline.
 
 ---
 
