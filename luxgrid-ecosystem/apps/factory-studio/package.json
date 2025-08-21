@@ -1,0 +1,30 @@
+{
+  "name": "@noid/factory-studio",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@noid/design-system": "file:../../packages/noid-design-system",
+    "@noid/factory-ui": "file:../../packages/factory-ui",
+    "@noid/penny-core": "file:../../packages/penny-core",
+    "next": "14.2.5",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "24.3.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.5",
+    "postcss": "^8.4.31",
+    "prettier": "^3.3.2",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.4.5"
+  }
+}

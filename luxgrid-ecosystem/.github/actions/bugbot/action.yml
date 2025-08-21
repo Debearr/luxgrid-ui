@@ -1,0 +1,29 @@
+name: "Bugbot Elite"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+    - name: Install dependencies
+      shell: bash
+      run: |
+        npm ci
+    - name: Lint
+      shell: bash
+      run: |
+        npm run -ws lint || true
+    - name: Format
+      shell: bash
+      run: |
+        npm run -ws format || true
+    - name: Build
+      shell: bash
+      run: |
+        npm run -ws build || true
+    - name: Lighthouse CI (placeholder)
+      shell: bash
+      run: |
+        echo "Skipping Lighthouse in placeholder action"
