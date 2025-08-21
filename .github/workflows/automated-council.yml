@@ -1,0 +1,83 @@
+name: Automated Council CI/CD
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Quality Gates
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Run unit tests
+        run: |
+          npm run test:ci
+
+      - name: Security scan (npm audit)
+        run: |
+          npm audit --production --audit-level=high || true
+
+      - name: Prepare static output (from public/)
+        run: |
+          mkdir -p dist
+          cp -a public/. dist/
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+  deploy:
+    name: Vercel Deploy
+    needs: ci
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy to Vercel (Preview)
+        if: github.ref != 'refs/heads/main'
+        uses: vercel/actions/deploy@v3
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          projectId: ${{ secrets.VERCEL_PROJECT_ID }}
+          orgId: ${{ secrets.VERCEL_ORG_ID }}
+          path: ./dist
+          prebuilt: true
+
+      - name: Deploy to Vercel (Production)
+        if: github.ref == 'refs/heads/main'
+        uses: vercel/actions/deploy@v3
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          projectId: ${{ secrets.VERCEL_PROJECT_ID }}
+          orgId: ${{ secrets.VERCEL_ORG_ID }}
+          path: ./dist
+          prod: true
+          prebuilt: true
+
