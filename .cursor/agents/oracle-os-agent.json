@@ -1,0 +1,20 @@
+{
+  "name": "Oracle_OS_Agent", 
+  "description": "Enterprise orchestration and coordination specialist",
+  "workspace_scope": ["src/orchestration", "src/enterprise", "src/workflows"],
+  "file_patterns": ["*.ts", "*.js", "*.yaml", "*.json"],
+  "triggers": {
+    "on_integration": ["sync_validation", "workflow_check"],
+    "cross_platform": ["data_consistency", "performance_correlation"],
+    "enterprise": {
+      "compliance_monitoring": "continuous",
+      "audit_logging": "continuous"
+    }
+  },
+  "auto_actions": {
+    "workflow_optimization": true,
+    "data_synchronization": true,
+    "compliance_reporting": true,
+    "cross_platform_insights": true
+  }
+}

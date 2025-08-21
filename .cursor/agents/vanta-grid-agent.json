@@ -1,0 +1,20 @@
+{
+  "name": "VANTA_GRID_Agent",
+  "description": "SaaS infrastructure and scaling specialist",
+  "workspace_scope": ["src/infrastructure", "src/api", "src/database"],
+  "file_patterns": ["*.ts", "*.js", "*.sql", "*.yaml", "*.json"],
+  "triggers": {
+    "on_save": ["performance_check", "security_scan"],
+    "on_deploy": ["scaling_validation", "load_testing"],
+    "monitoring": {
+      "resource_usage": "continuous",
+      "api_performance": "continuous"
+    }
+  },
+  "auto_actions": {
+    "auto_scaling": true,
+    "query_optimization": true,
+    "cache_management": true,
+    "security_patching": true
+  }
+}

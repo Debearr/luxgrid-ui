@@ -1,6 +1,29 @@
 {
-  "framework": null,
-  "buildCommand": "",
-  "installCommand": "",
-  "outputDirectory": "public"
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
+  ],
+  "env": {
+    "CURSOR_AGENTS_ENABLED": "true",
+    "AUTO_DEPLOYMENT": "true",
+    "BRAND_VALIDATION": "true"
+  },
+  "functions": {
+    "src/api/**/*.js": {
+      "maxDuration": 30
+    }
+  }
 }
