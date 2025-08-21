@@ -1,0 +1,7 @@
+{
+  "BRAND_VALIDATION": true,
+  "ZERO_TOUCH_DEPLOY": true,
+  "ROLLBACK_ON_FAIL": true,
+  "PERF_BUDGETS_ENFORCED": true
+}
+
