@@ -1,0 +1,45 @@
+{
+  "sections": {
+    "hero": {
+      "headline": "Drive Unseen. Tap Less. Earn Smart.",
+      "subheadline": "Command attention. Convert faster. Launch in minutes.",
+      "cta_primary": "Get Started Today",
+      "cta_secondary": "See Live Demo",
+      "padding": { "top": "6rem", "bottom": "6rem" }
+    },
+    "features": [
+      { "title": "Zero-Friction Setup", "blurb": "Deploy with branding, tokens, and CI/CD prewired." },
+      { "title": "Luxury-Grade UI", "blurb": "Matte black, gold accents, neon highlights—out of the box." },
+      { "title": "AI-First", "blurb": "Onboarding, insights, and copilots to scale faster." }
+    ],
+    "testimonials": [
+      { "quote": "Investor-ready in a weekend.", "author": "A. Rivera", "role": "Founder" },
+      { "quote": "Sharp, fast, unforgettable.", "author": "L. Chen", "role": "Product Lead" }
+    ],
+    "pricing": {
+      "tiers": [
+        { "name": "Starter", "price": "$0", "period": "mo", "features": ["Branded landing", "Email capture", "1 click deploy"] },
+        { "name": "Pro", "price": "$39", "period": "mo", "features": ["All Starter", "A/B copy presets", "Analytics", "Sentry + LogRocket"] },
+        { "name": "Elite", "price": "$149", "period": "mo", "features": ["All Pro", "AI copilot", "Priority support"] }
+      ],
+      "cta": "Launch Now"
+    },
+    "contact": {
+      "headline": "Questions? We’ll get you live fast.",
+      "cta": "Talk to Us"
+    }
+  },
+  "copy_rules": {
+    "voice": "magnetic, concise, luxury-meets-street disruptor",
+    "max_sentence_length": 15,
+    "do": ["Lead with value", "Use strong verbs", "Keep it punchy"],
+    "dont": ["Jargon", "Passive voice", "Bloated sentences"]
+  },
+  "visuals": {
+    "palette_refs": ["colors.primary", "colors.accent_gold", "colors.accent_teal", "colors.highlight"],
+    "shadow": "0 6px 40px rgba(0, 0, 0, 0.5)",
+    "radius": "1.5rem"
+  },
+  "padding_defaults": { "top": "6rem", "bottom": "6rem" }
+}
+

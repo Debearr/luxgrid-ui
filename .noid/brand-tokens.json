@@ -1,0 +1,49 @@
+{
+  "fonts": {
+    "primary": "Helvetica Neue, sans-serif",
+    "secondary": "Futura, sans-serif",
+    "accent": "Cormorant Garamond, serif",
+    "headline": "Bebas Neue, sans-serif",
+    "body": "Inter, sans-serif"
+  },
+  "colors": {
+    "primary": "#000000",
+    "secondary": "#1A1A1A",
+    "accent_gold": "#D4AF37",
+    "accent_teal": "#00FFC6",
+    "accent_rose": "#E91E63",
+    "highlight": "#FF007F",
+    "background": "#0D0D0D",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#C0C0C0"
+  },
+  "logos": {
+    "primary": "/assets/noid-logo.svg",
+    "alt": "/assets/noid-barcode.png",
+    "signature_gold": "/assets/debear-signature-gold.png",
+    "signature_black": "/assets/debear-signature-black.png",
+    "signature_rose": "/assets/debear-signature-rose.png"
+  },
+  "ui": {
+    "border_radius": "1.5rem",
+    "shadow": "0 6px 40px rgba(0, 0, 0, 0.5)",
+    "transition": "all 0.25s ease-in-out",
+    "padding_global": "2rem",
+    "line_height": "1.6",
+    "max_width_content": "1280px",
+    "section_padding": {
+      "top": "6rem",
+      "bottom": "6rem"
+    }
+  },
+  "copy_style": {
+    "voice": "magnetic, concise, luxury-meets-street disruptor",
+    "rules": [
+      "Always lead with value or bold promise",
+      "Keep sentences under 15 words",
+      "Use verbs that drive urgency and confidence",
+      "Never sound corporate-boring — always punchy and alive"
+    ]
+  }
+}
+
