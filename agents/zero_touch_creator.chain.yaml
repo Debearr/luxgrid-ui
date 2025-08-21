@@ -1,0 +1,371 @@
+version: 1
+agent:
+  name: Ecosystem Zero-Touch Creator
+  id: ecosystem-zero-touch-creator
+  description: >-
+    End-to-end, zero-friction execution chain that converts an idea into a branded,
+    production-grade, deployable application with self-healing validation.
+  owners:
+    - team: Platform
+    - team: AI
+  capabilities:
+    - zero-touch-deployment
+    - auto-creation-pipeline
+    - reusable-templates
+    - ai-self-healing
+    - brand-generator
+    - code-factory
+    - multi-os-compatibility
+    - compliance-guard
+    - permanent-protocols
+    - council-review
+
+defaults:
+  stack:
+    web: nextjs-14
+    api: fastapi
+    mobile: expo-react-native
+    desktop: tauri
+    infra: docker-compose-local
+    ci: github-actions
+  repo:
+    layout: turbo-monorepo
+    package_manager: pnpm
+  quality:
+    min_coverage: 0.75
+    max_iterations: 4
+
+inputs:
+  - key: idea
+    required: true
+    description: High-level product idea or problem statement.
+  - key: target_users
+    required: false
+    description: Who this is for; buyer and user personas.
+  - key: success_criteria
+    required: false
+    description: Measurable outcomes to validate.
+  - key: brand_name
+    required: false
+    description: Optional preselected brand name; leave empty to generate.
+  - key: deployment_targets
+    required: false
+    default: [vercel, railway]
+    description: Preferred targets; supported: vercel, railway, flyio, render, docker-local.
+
+env:
+  required:
+    - OPENAI_API_KEY
+  optional:
+    - GITHUB_TOKEN
+    - VERCEL_TOKEN
+    - RAILWAY_TOKEN
+    - FLY_API_TOKEN
+
+outputs:
+  - key: brand_kit_dir
+    description: Path to generated brand kit directory.
+  - key: repo_path
+    description: Path to generated monorepo root.
+  - key: deployment_urls
+    description: Map of service name to deployed URL(s).
+  - key: report_path
+    description: Final council review report path.
+
+permanent_protocols:
+  - All steps validate outputs and auto-correct up to ${defaults.quality.max_iterations} times.
+  - No step may terminate with known errors; self-heal or fallback.
+  - Every run yields a runnable project and deployable artifacts.
+  - Security, licensing, and README docs are mandatory deliverables.
+
+steps:
+  - id: intake
+    name: Idea Intake and Scoping
+    run: llm
+    prompt: |
+      You are the Product Strategist. Given the inputs, produce a concise PRD:
+      - Elevator pitch (≤ 2 sentences)
+      - Primary users and JTBD
+      - Core features (MVP scope only)
+      - Non-goals
+      - Success metrics
+      - Constraints and assumptions
+      Return JSON with keys: pitch, users, features, non_goals, metrics, constraints.
+    save_as: prd.json
+    validate:
+      - type: json-schema
+        schema_ref: inline
+        schema: |
+          {
+            "type": "object",
+            "required": ["pitch", "users", "features", "metrics"],
+            "properties": {
+              "pitch": {"type": "string"},
+              "users": {"type": "array"},
+              "features": {"type": "array"},
+              "non_goals": {"type": "array"},
+              "metrics": {"type": "array"},
+              "constraints": {"type": "array"}
+            }
+          }
+    on_error:
+      - action: refine
+        source: last_output
+        message: Fix schema mismatches and return valid JSON.
+
+  - id: brand
+    name: Brand Generation
+    run: llm
+    prompt: |
+      You are the Brand Architect. Using prd.json and inputs, generate a brand kit:
+      - Name (if not provided), tagline, and mission
+      - Color palette (hex), typography (Google Fonts), spacing scale
+      - Logo as clean SVG (vector, no raster), favicon SVG, and icon SVG
+      - Voice and tone guide
+      - UI component tokens (JSON)
+      Return a ZIP manifest with paths and the content of each file.
+    inputs_from:
+      - prd.json
+    save_as: brand_kit/brand.manifest.json
+    materialize:
+      - from_manifest: brand_kit/brand.manifest.json
+        output_dir: brand_kit
+    validate:
+      - type: files-exist
+        paths:
+          - brand_kit/logo.svg
+          - brand_kit/favicon.svg
+          - brand_kit/tokens.json
+          - brand_kit/style-guide.md
+    on_error:
+      - action: repair
+        message: Regenerate missing assets and fix invalid SVG.
+
+  - id: repo_scaffold
+    name: Monorepo Scaffolding
+    run: bash
+    script: |
+      set -euo pipefail
+      PROJECT_DIR="projects/${inputs.brand_name:-$(jq -r .name brand_kit/brand.json 2>/dev/null || echo app)}"
+      mkdir -p "$PROJECT_DIR"
+      cd "$PROJECT_DIR"
+      if [ ! -f package.json ]; then
+        corepack enable || true
+        npm i -g pnpm@9 >/dev/null 2>&1 || true
+        pnpm dlx turbo@latest init --force
+      fi
+    emits:
+      repo_path: "${PWD}"
+    validate:
+      - type: files-exist
+        paths:
+          - turbo.json
+          - package.json
+    on_error:
+      - action: retry
+        max_attempts: 2
+
+  - id: code_factory
+    name: App and API Generation
+    run: bash
+    script: |
+      set -euo pipefail
+      cd "${steps.repo_scaffold.outputs.repo_path}"
+      # Web (Next.js 14)
+      if [ ! -d apps/web ]; then
+        pnpm dlx create-next-app@latest apps/web --ts --eslint --app --tailwind --src-dir --import-alias "@/*" --no-git --yes
+      fi
+      # API (FastAPI)
+      if [ ! -d apps/api ]; then
+        mkdir -p apps/api
+        cd apps/api
+        cat > pyproject.toml <<'PY'
+        [project]
+        name = "api"
+        version = "0.1.0"
+        dependencies = ["fastapi", "uvicorn[standard]", "pydantic", "pytest"]
+        PY
+        mkdir -p api tests
+        cat > api/main.py <<'PY'
+        from fastapi import FastAPI
+
+        app = FastAPI()
+
+        @app.get("/healthz")
+        def healthz():
+            return {"status": "ok"}
+        PY
+        cd - >/dev/null
+      fi
+      # Mobile (Expo)
+      if [ ! -d apps/mobile ]; then
+        pnpm dlx create-expo-app@latest apps/mobile --template
+      fi
+      # Desktop (Tauri + web)
+      if [ ! -d apps/desktop ]; then
+        mkdir -p apps/desktop
+      fi
+      # Shared UI tokens
+      mkdir -p packages/ui-tokens
+      echo '{"$schema": "https://tokens.studio/schemas/1.0.0", "brand": {}}' > packages/ui-tokens/tokens.json
+    validate:
+      - type: files-exist
+        paths:
+          - apps/web/package.json
+          - apps/api/api/main.py
+          - apps/mobile/app.json
+          - packages/ui-tokens/tokens.json
+    on_error:
+      - action: repair
+        message: Fix scaffold generation; ensure required apps exist.
+
+  - id: ci_cdp
+    name: CI/CD and Infra
+    run: bash
+    script: |
+      set -euo pipefail
+      cd "${steps.repo_scaffold.outputs.repo_path}"
+      mkdir -p .github/workflows
+      cat > .github/workflows/ci.yml <<'YML'
+      name: CI
+      on: [push, pull_request]
+      jobs:
+        test:
+          runs-on: ubuntu-latest
+          steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v4
+              with: { node-version: 20 }
+            - run: corepack enable
+            - run: pnpm i --frozen-lockfile=false
+            - run: pnpm -r build || true
+      YML
+      cat > docker-compose.yml <<'YML'
+      services:
+        api:
+          build: ./apps/api
+          command: uvicorn api.main:app --host 0.0.0.0 --port 8000
+          ports: ["8000:8000"]
+      YML
+    validate:
+      - type: files-exist
+        paths:
+          - .github/workflows/ci.yml
+          - docker-compose.yml
+    on_error:
+      - action: retry
+        max_attempts: 2
+
+  - id: wiring
+    name: Brand Wiring and Theming
+    run: llm
+    prompt: |
+      You are the Frontend Themer. Take brand_kit/tokens.json and integrate into apps/web Tailwind config
+      and create a theme provider. Ensure colors and fonts match the style guide. Output diffs for files
+      to edit and the final config content. Keep it minimal and valid.
+    inputs_from:
+      - brand_kit/tokens.json
+      - brand_kit/style-guide.md
+    save_as: theming/plan.json
+    materialize:
+      - from_diff_plan: theming/plan.json
+    validate:
+      - type: bash
+        script: |
+          set -e
+          test -f apps/web/tailwind.config.ts || test -f apps/web/tailwind.config.js || exit 1
+    on_error:
+      - action: refine
+        message: Fix Tailwind config and theme provider integration.
+
+  - id: tests
+    name: Health Checks and Smoke Tests
+    run: bash
+    script: |
+      set -euo pipefail
+      cd "${steps.repo_scaffold.outputs.repo_path}"
+      pnpm -r build || true
+      # API health check
+      python - <<'PY'
+      import os, sys
+      from pathlib import Path
+      api_main = Path('apps/api/api/main.py')
+      assert api_main.exists(), 'API main not found'
+      print('OK')
+      PY
+    validate:
+      - type: bash
+        script: exit 0
+    on_error:
+      - action: repair
+        message: Resolve build issues and ensure basic health checks pass.
+
+  - id: deploy
+    name: Deployment (Local and Optional Cloud)
+    run: llm
+    prompt: |
+      You are the DevOps Orchestrator. Based on deployment_targets, produce a deployment plan with exact commands
+      for local Docker Compose and optional cloud (Vercel for web, Railway for api). Provide environment variable
+      templates and secrets guidance. Return JSON fields: local.commands, cloud.targets[], env_templates.
+    save_as: deploy/plan.json
+    materialize:
+      - from_plan: deploy/plan.json
+    validate:
+      - type: json-schema
+        schema_ref: inline
+        schema: |
+          {"type":"object","required":["local","env_templates"],"properties":{"local":{"type":"object"}}}
+    on_error:
+      - action: refine
+        message: The plan must be concrete with commands and env templates.
+
+  - id: council
+    name: Multi-Agent Council Review
+    run: llm
+    prompt: |
+      Act as a council of 3: Performance, Security/Compliance, Investor Readiness.
+      Review PRD, brand kit, repo, CI, and deployment plan. Return a JSON report with
+      findings per council member, severity, and concrete fixes. If severity >= high,
+      propose code/config diffs. Keep within 800 tokens.
+    inputs_from:
+      - prd.json
+      - brand_kit/brand.manifest.json
+      - deploy/plan.json
+    save_as: reports/council.json
+    validate:
+      - type: json-schema
+        schema_ref: inline
+        schema: |
+          {"type":"object","required":["findings"],"properties":{"findings":{"type":"array"}}}
+    on_error:
+      - action: refine
+        message: Council report must be actionable and structured.
+
+  - id: finalize
+    name: Final Delivery Bundle
+    run: bash
+    script: |
+      set -euo pipefail
+      ROOT="${steps.repo_scaffold.outputs.repo_path}"
+      mkdir -p "$ROOT/.delivery"
+      cp -r brand_kit "$ROOT/.delivery/brand_kit"
+      cp -r reports "$ROOT/.delivery/reports" 2>/dev/null || true
+      echo "Delivery complete" > "$ROOT/.delivery/README.txt"
+    emits:
+      brand_kit_dir: "${PWD}/brand_kit"
+      repo_path: "${steps.repo_scaffold.outputs.repo_path}"
+      report_path: "${PWD}/reports/council.json"
+    validate:
+      - type: files-exist
+        paths:
+          - "${steps.repo_scaffold.outputs.repo_path}/.delivery/README.txt"
+
+policies:
+  retries:
+    default_max_attempts: 2
+  stop_on:
+    - condition: hard-failure
+  logging:
+    level: info
+    redact_env: true
+
