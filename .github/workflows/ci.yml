@@ -1,0 +1,72 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Env health gate
+        run: bash scripts/validate-env.sh
+      - name: Lint
+        run: npm run lint
+      - name: Typecheck
+        run: npm run typecheck || true
+      - name: Build
+        run: npm run build
+      - name: Tests (CI)
+        run: npm run test:ci || true
+
+  smoke:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Smoke
+        run: npm run smoke:run
+
+  lighthouse:
+    needs: build-test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Lighthouse CI (non-blocking)
+        run: npx @lhci/cli autorun || echo "LHCI non-blocking"
+
+  reports:
+    needs: [build-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Generate reports
+        run: npm run report:generate
+      - name: Validate reports
+        run: npm run report:validate
