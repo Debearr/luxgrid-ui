@@ -126,6 +126,8 @@ jobs:
     needs: [ai-council-analysis, automated-pr-creation]
     if: needs.ai-council-analysis.outputs.deployment-ready == 'true'
     runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.vercel.outputs.url }}
     steps:
       - name: 🌐 Install Vercel CLI
         run: npm i -g vercel@latest

@@ -1,0 +1,75 @@
+name: PR Preview Smoke
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  preview-smoke:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq
+          npm i -g vercel@latest
+
+      - name: Determine PR branch
+        id: branch
+        run: |
+          echo "name=${{ github.head_ref || github.ref_name }}" >> $GITHUB_OUTPUT
+
+      - name: Fetch latest Vercel preview URL
+        id: preview
+        env:
+          BRANCH: ${{ steps.branch.outputs.name }}
+        run: |
+          API="https://api.vercel.com/v6/deployments?projectId=$VERCEL_PROJECT_ID&target=preview&state=READY&limit=50"
+          url=$(curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" "$API" \
+            | jq -r ".deployments | map(select(.meta.githubCommitRef == \"$BRANCH\")) | sort_by(.created) | last | .url")
+          if [ "$url" = "null" ] || [ -z "$url" ]; then
+            # fallback: pick most recent READY preview
+            url=$(curl -sS -H "Authorization: Bearer $VERCEL_TOKEN" "$API" | jq -r ".deployments | sort_by(.created) | last | .url")
+          fi
+          if [ "$url" = "null" ] || [ -z "$url" ]; then
+            echo "No preview URL found" >&2
+            exit 1
+          fi
+          echo "url=https://$url" >> $GITHUB_OUTPUT
+
+      - name: Run preview smoke
+        id: smoke
+        continue-on-error: true
+        run: |
+          bash tests/smoke/preview-smoke.sh "${{ steps.preview.outputs.url }}" | tee smoke-output.txt
+
+      - name: Comment result
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('smoke-output.txt', 'utf8');
+            const url = `${{ toJson(steps.preview.outputs.url) }}`;
+            const ok = `${{ steps.smoke.outcome }}` === 'success';
+            const summary = ok ? `✅ Preview smoke passed\nURL: ${url}` : `❌ Preview smoke failed\nURL: ${url}`;
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `${summary}\n\n\n<details><summary>Log</summary>\n\n\n\`${body.replace(/`/g, '\\`')}\`\n\n\n</details>\n\n` + (ok ? '' : 'Suggested fix: ensure /api/health returns {"status":"ok"}, assets load, and routes exist.')
+            });
+
+      - name: Fail if smoke failed
+        if: steps.smoke.outcome != 'success'
+        run: exit 1
