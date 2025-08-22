@@ -7,7 +7,8 @@
     "build": "node -e \"console.log('Build: static noop for CI/Vercel');\"",
     "start": "node -e \"console.log('Start: noop');\"",
     "test": "node -e \"console.log('No tests');\"",
-    "brand:validate": "node automation/brand-check.js || true"
+    "brand:validate": "node automation/brand-check.js || true",
+    "validate:reports": "node automation/validate-reports.js"
   },
   "engines": {
     "node": ">=18 <=20",
