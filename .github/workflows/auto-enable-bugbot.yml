@@ -1,0 +1,51 @@
+name: Auto-Enable Bugbot
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      include:
+        description: 'Comma-separated repo names to include (optional)'
+        required: false
+        type: string
+      exclude:
+        description: 'Comma-separated repo names to exclude (optional)' 
+        required: false
+        type: string
+      dryRun:
+        description: 'Dry run (true/false)'
+        required: false
+        default: 'false'
+        type: string
+
+jobs:
+  enable:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install deps
+        run: |
+          npm --version || true
+          node --version
+          # no deps currently, but placeholder if we add later
+
+      - name: Run enable-bugbot
+        env:
+          GITHUB_TOKEN: ${{ secrets.BUGBOT_GITHUB_TOKEN }}
+          GITHUB_OWNER: ${{ vars.GITHUB_OWNER || github.repository_owner }}
+          CURSOR_API_URL: ${{ vars.CURSOR_API_URL }}
+          CURSOR_API_TOKEN: ${{ secrets.CURSOR_API_TOKEN }}
+          INCLUDE_REPOS: ${{ inputs.include }}
+          EXCLUDE_REPOS: ${{ inputs.exclude }}
+          DRY_RUN: ${{ inputs.dryRun }}
+        run: node ./scripts/enable-bugbot.mjs | cat
