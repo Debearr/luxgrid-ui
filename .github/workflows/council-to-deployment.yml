@@ -41,7 +41,13 @@ jobs:
           cache: 'npm'
 
       - name: 📦 Install
-        run: npm ci
+        run: |
+          if [ -f package-lock.json ]; then
+            npm ci
+          else
+            npm install --no-audit --no-fund
+            npm pkg set package-lock=true >/dev/null 2>&1 || true
+          fi
 
       - name: 🧠 Run Council
         run: node automation/run-council.js
