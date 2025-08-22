@@ -1,14 +1,11 @@
 {
   "version": 2,
-  "framework": "nextjs",
-  "env": {
-    "AI_COUNCIL_ENABLED": "true",
-    "ZERO_TOUCH_DEPLOY": "true",
-    "BRAND_VALIDATION": "true"
-  },
+  "framework": null,
+  "buildCommand": "",
+  "installCommand": "",
+  "outputDirectory": "public",
   "routes": [
-    { "src": "/api/auraFX/(.*)", "dest": "/api/auraFX/$1" },
-    { "src": "/api/noid/(.*)", "dest": "/api/noid/$1" },
+    { "src": "/health", "dest": "/api/health.js" },
     { "src": "/(.*)", "dest": "/$1" }
   ],
   "headers": [
@@ -22,11 +19,4 @@
   ],
   "cleanUrls": true,
   "trailingSlash": false
-}
-
-{
-  "framework": null,
-  "buildCommand": "",
-  "installCommand": "",
-  "outputDirectory": "public"
 }

@@ -1,0 +1,15 @@
+{
+  "as_of": "2025-08-22T02:48:19.769Z",
+  "currency": "USD",
+  "baseline": {
+    "revenue_usd_30d": 1250000,
+    "growth_rate_pct_mom": 8.5,
+    "runway_months": 18,
+    "burn_usd_monthly": 68000
+  },
+  "stress_test": {
+    "downside_pct": -30,
+    "revenue_usd_30d": 875000,
+    "runway_months": 14
+  }
+}
