@@ -13,7 +13,8 @@
     "brand:validate": "node automation/brand-check.js",
     "council:run": "node automation/run-council.js",
     "automation:status": "node automation/monitor.js",
-    "rollback": "node automation/rollback.js"
+    "rollback": "node automation/rollback.js",
+  "preflight:env": "node scripts/check-env.mjs"
   },
   "dependencies": {
     "next": "^14.2.10",
