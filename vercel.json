@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "framework": "nextjs",
-  "env": {
-    "AI_COUNCIL_ENABLED": "true",
-    "ZERO_TOUCH_DEPLOY": "true",
-    "BRAND_VALIDATION": "true"
-  },
+  "framework": null,
+  "buildCommand": "",
+  "installCommand": "",
+  "outputDirectory": "public",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "routes": [
     { "src": "/api/auraFX/(.*)", "dest": "/api/auraFX/$1" },
     { "src": "/api/noid/(.*)", "dest": "/api/noid/$1" },
@@ -19,14 +19,5 @@
         { "key": "X-Brand-Compliant", "value": "luxury-street" }
       ]
     }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false
-}
-
-{
-  "framework": null,
-  "buildCommand": "",
-  "installCommand": "",
-  "outputDirectory": "public"
+  ]
 }
