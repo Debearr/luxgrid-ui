@@ -23,10 +23,3 @@
   "cleanUrls": true,
   "trailingSlash": false
 }
-
-{
-  "framework": null,
-  "buildCommand": "",
-  "installCommand": "",
-  "outputDirectory": "public"
-}
