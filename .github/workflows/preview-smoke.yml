@@ -1,0 +1,41 @@
+name: Preview Smoke Test
+
+on:
+  pull_request:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: npm
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Start server
+        run: |
+          (npx serve -s .next/standalone || node .next/standalone/server.js) &
+          echo $! > server.pid
+
+      - name: Wait for port 3000
+        run: |
+          for i in {1..60}; do
+            if nc -z localhost 3000; then echo "up"; exit 0; fi; sleep 1; done; exit 1
+
+      - name: Run smoke checks
+        run: npm run smoke:local
+
+      - name: Stop server
+        if: always()
+        run: |
+          kill $(cat server.pid) || true
