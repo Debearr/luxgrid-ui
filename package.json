@@ -1,64 +1,29 @@
 {
-  "name": "auraFX-noid-ecosystem",
-  "version": "2.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start -p 3000",
-    "test": "jest",
-    "test:ci": "jest --ci --coverage --watchAll=false",
-    "security:scan": "npm audit --audit-level=high",
-    "performance:audit": "lighthouse-ci autorun || echo 'LH stub pass'",
-    "brand:validate": "node automation/brand-check.js",
-    "council:run": "node automation/run-council.js",
-    "automation:status": "node automation/monitor.js",
-    "rollback": "node automation/rollback.js"
-  },
-  "dependencies": {
-    "next": "^14.2.10",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "@vercel/analytics": "^1.2.2",
-    "@sentry/nextjs": "^8.15.0"
-  },
-  "devDependencies": {
-    "jest": "^29.7.0",
-    "lighthouse-ci": "^0.13.0",
-    "@types/node": "^20.14.10"
-  }
-}
-
-{
-  "name": "luxgrid-ui",
-  "version": "0.1.0",
-  "description": "Shared React + Tailwind CSS component library for the LuxGrid ecosystem (AuraFX, NØID, Noidlux, PostPilot).",
-  "main": "index.js",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "keywords": [
-    "react",
-    "tailwind",
-    "ui-library",
-    "design-system",
-    "luxury"
-  ],
-  "author": "LuxGrid Team",
-  "license": "MIT",
-  "devDependencies": {
-    "@storybook/react": "^8.0.0",
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.4.0",
-    "tailwindcss": "^3.4.0",
-    "vite": "^5.0.0"
-  },
-  "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  }
+	"name": "auraFX-noid-ecosystem",
+	"version": "2.1.1",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "next build",
+		"start": "next start",
+		"lint": "next lint"
+	},
+	"dependencies": {
+		"next": "^14.2.10",
+		"react": "^18.3.1",
+		"react-dom": "^18.3.1"
+	},
+	"devDependencies": {
+		"@types/node": "^20.14.10",
+		"@types/react": "^18.2.66",
+		"@types/react-dom": "^18.2.22",
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
+		"@typescript-eslint/parser": "^6.21.0",
+		"autoprefixer": "^10.4.20",
+		"eslint": "^8.57.0",
+		"eslint-config-next": "14.2.10",
+		"postcss": "^8.4.45",
+		"tailwindcss": "^3.4.10",
+		"typescript": "5.9.2"
+	}
 }
