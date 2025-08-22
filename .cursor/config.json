@@ -1,0 +1,12 @@
+{
+  "bugbot": {
+    "onlyRunWhenMentioned": false,
+    "onlyRunOnceAutomatically": false,
+    "reviewDraftPrs": true
+  },
+  "defaults": {
+    "model": "gpt-5",
+    "baseBranch": "main",
+    "repository": "Debearr/luxgrid-ui"
+  }
+}
