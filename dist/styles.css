@@ -1,0 +1,157 @@
+/* ==========================================================================
+   Noidlux – Landing Styles (full file replacement)
+   Vibe: luxury x street, high-contrast, neon-teal accents, matte blacks
+   ========================================================================== */
+
+:root {
+  --bg: #0c0f16;           /* matte black / ink */
+  --bg-elev: #111626;      /* slightly raised surfaces */
+  --text: #e7ecf4;         /* soft white */
+  --muted: #98a2b3;        /* slate */
+  --brand: #56e5d6;        /* neon teal */
+  --brand-2: #8cb8ff;      /* cool blue secondary */
+  --gold: #f2c14e;         /* luxe hint */
+  --ring: rgba(86, 229, 214, 0.45);
+  --shadow: 0 10px 30px rgba(0,0,0,.45);
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 26px;
+
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Base reset-ish */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(1200px 800px at 10% -10%, rgba(86,229,214,.06), transparent 60%),
+              radial-gradient(800px 600px at 110% 10%, rgba(140,184,255,.05), transparent 60%),
+              var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Links */
+a {
+  color: var(--brand);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Utilities */
+.wrap {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 28px 20px;
+}
+
+.muted { color: var(--muted); }
+
+/* --------------------------------------------------------------------------
+   Header / Hero
+   -------------------------------------------------------------------------- */
+.hero {
+  margin-top: 10px;
+  padding: 26px 22px;
+  border: 1px solid rgba(255,255,255,.06);
+  background:
+    linear-gradient(180deg, rgba(17,22,38,.7), rgba(17,22,38,.4) 50%, rgba(17,22,38,.2) 100%);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: clip;
+}
+
+.hero::after {
+  /* soft glow bar */
+  content: "";
+  position: absolute;
+  inset: -1px -1px auto -1px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--brand), var(--brand-2), transparent);
+  opacity: .6;
+}
+
+.hero h1 {
+  margin: 0 0 4px 0;
+  font-size: clamp(30px, 3.8vw, 44px);
+  letter-spacing: .2px;
+}
+
+.hero p {
+  margin: 6px 0 14px 0;
+  font-size: 15.5px;
+}
+
+/* Tabs / nav */
+.tabs {
+  display: inline-flex;
+  gap: 8px;
+  padding: 6px;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.06);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+}
+.tabs a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--text);
+  text-decoration: none;
+  position: relative;
+  transition: transform .15s ease, background-color .15s ease;
+}
+.tabs a:hover {
+  background: rgba(255,255,255,.06);
+}
+.tabs a:active {
+  transform: translateY(1px);
+}
+
+/* --------------------------------------------------------------------------
+   Sections
+   -------------------------------------------------------------------------- */
+main .wrap { padding-top: 18px; }
+
+section {
+  margin: 36px 0;
+}
+
+section h2 {
+  margin: 0 0 14px 0;
+  font-size: clamp(20px, 2.4vw, 24px);
+  letter-spacing: .3px;
+}
+
+/* Cards list (for Features + Gallery) */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.cards li,
+.cards > div {
+  list-style: none;
+  padding: 16px 16px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.08);
+  background: linear-gradient(180deg, rgba(17,22,38,.6), rgba(17,22,38

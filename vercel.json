@@ -1,6 +1,9 @@
 {
   "version": 2,
-  "framework": "nextjs",
+  "framework": null,
+  "buildCommand": "",
+  "installCommand": "",
+  "outputDirectory": "public",
   "env": {
     "AI_COUNCIL_ENABLED": "true",
     "ZERO_TOUCH_DEPLOY": "true",
@@ -22,11 +25,4 @@
   ],
   "cleanUrls": true,
   "trailingSlash": false
-}
-
-{
-  "framework": null,
-  "buildCommand": "",
-  "installCommand": "",
-  "outputDirectory": "public"
 }
