@@ -1,0 +1,1 @@
+{"scenarios":{"bear":{"arr":700000,"burn":160000,"breakeven_month":null,"runway_months":12},"base":{"arr":1200000,"burn":150000,"breakeven_month":16},"bull":{"arr":3000000,"burn":180000,"breakeven_month":9}},"assumptions":{"months":24,"starting_cash":1800000,"gross_margin":0.82}}
