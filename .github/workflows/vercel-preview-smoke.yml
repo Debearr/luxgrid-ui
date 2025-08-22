@@ -1,0 +1,37 @@
+name: Vercel Preview Smoke
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main]
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      GITHUB_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci || npm i
+      - run: npm run config:guard
+      - run: npm i -D node-fetch@3
+      - name: Wait for Vercel preview URL
+        id: wait
+        run: node scripts/wait-for-vercel.mjs
+      - name: Smoke: landing page
+        run: |
+          set -e
+          URL="${{ steps.wait.outputs.preview_url }}"
+          code=$(curl -s -o /tmp/index.html -w "%{http_code}" "$URL/")
+          [ "$code" = "200" ] || (echo "Landing page HTTP $code" && exit 1)
+          grep -qi "<html" /tmp/index.html || (echo "No HTML rendered" && exit 1)
+      - name: Smoke: /api/health
+        run: |
+          set -e
+          URL="${{ steps.wait.outputs.preview_url }}"
+          body=$(curl -s -H "Accept: application/json" "$URL/api/health")
+          echo "Response: $body"
+          echo "$body" | grep -q '"status"\s*:\s*"ok"' || (echo "/api/health not ok" && exit 1)
