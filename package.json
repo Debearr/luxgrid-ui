@@ -13,7 +13,12 @@
     "brand:validate": "node automation/brand-check.js",
     "council:run": "node automation/run-council.js",
     "automation:status": "node automation/monitor.js",
-    "rollback": "node automation/rollback.js"
+    "rollback": "node automation/rollback.js",
+    "dev:check": "npm run validate:config && npm run type-check && npm run dev",
+    "deploy:preview": "npm run build && vercel --confirm",
+    "health:local": "curl -s http://localhost:3000/api/health | jq '.' || curl -s http://localhost:3000/api/health",
+    "validate:config": "node scripts/validate-vercel-config.js",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "next": "^14.2.10",

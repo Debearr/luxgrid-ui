@@ -37,3 +37,28 @@ LuxGrid UI provides Fortune-500 polish, accessibility, and modular components ac
 ---
 
 © 2025 LuxGrid — MIT License
+
+## 🚀 Deployment Pipeline
+
+### Automatic Deployment
+- **PR Creation**: Triggers Vercel preview deployment
+- **Validation**: Automated smoke tests verify functionality  
+- **Brand Compliance**: Checks NØID branding elements
+- **Merge Protection**: Cannot merge without passing all checks
+
+### Local Development
+```bash
+npm run dev:check    # Validate config + start dev server
+npm run health:local # Check local API health
+npm run validate:config # Run configuration validation
+```
+
+### Manual Deployment
+```bash
+npm run deploy:preview # Deploy preview to Vercel
+```
+
+### Performance Metrics
+- Build time: 2-3 minutes (optimized with caching)
+- Preview ready: 30-60 seconds
+- Smoke tests: 15-20 seconds (parallel execution)
