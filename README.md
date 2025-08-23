@@ -37,3 +37,11 @@ LuxGrid UI provides Fortune-500 polish, accessibility, and modular components ac
 ---
 
 © 2025 LuxGrid — MIT License
+
+## 🚀 Cloud Dev (Codespaces)
+1. Click **Code → Codespaces → Create codespace**.
+2. It opens VS Code in the browser, runs `npm ci` automatically.
+3. Run `npm run dev` — a URL will appear (port 3000 forwarded).
+4. Open that URL and verify:
+   - `/` renders the NØID landing page (not blank)
+   - `/api/health` returns `{"status":"ok"}`
