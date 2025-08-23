@@ -1,0 +1,179 @@
+version: 1
+name: de-bear-labs-app-factory
+orchestrator: cursor
+rules:
+  additive_only: true
+  protect_paths:
+    - apps/**/landing/**
+    - templates/saas-studio/brand/**
+    - templates/saas-studio/apps/landing/**
+  brand_manifest: templates/saas-studio/brand/brand.yml
+
+projects:
+  - id: noid
+    root: apps/noid
+    generators:
+      - path: ocr/firebase_ml_client.ts
+        template: typescript/module
+      - path: ocr/paddle_ocr_service.py
+        template: python/fastapi_service
+        docker: true
+      - path: ocr/tesseract_fallback.py
+        template: python/module
+      - path: ocr/router.ts
+        template: nextjs/api_route
+      - path: ocr/fixtures/.keep
+        template: file/keep
+      - path: dashboard/pages/index.tsx
+        template: nextjs/page
+      - path: dashboard/pages/logs.tsx
+        template: nextjs/page
+      - path: dashboard/components/MetricsCards.tsx
+        template: react/component
+      - path: dashboard/components/TripTable.tsx
+        template: react/component
+      - path: dashboard/components/AcceptanceChart.tsx
+        template: react/component
+      - path: dashboard/lib/tasker_log_parser.ts
+        template: typescript/module
+      - path: dashboard/lib/metrics.ts
+        template: typescript/module
+      - path: beta/intake_form.md
+        template: markdown/doc
+      - path: beta/feedback_template.md
+        template: markdown/doc
+      - path: beta/privacy_brief.md
+        template: markdown/doc
+      - path: kickstarter/storyboard.md
+        template: markdown/doc
+      - path: kickstarter/rewards.md
+        template: markdown/doc
+      - path: kickstarter/press_kit/readme.md
+        template: markdown/doc
+    ci_additions:
+      - name: noid-ocr-tests
+        workflow: .github/workflows/ci.yml
+        steps:
+          - run: pnpm test --filter noid
+      - name: brand-guardrails
+        workflow: .github/workflows/ci.yml
+        steps:
+          - run: node templates/saas-studio/scripts/brand-validate.ts
+
+  - id: aurafx
+    root: apps/aurafx
+    generators:
+      - path: dashboard/app/layout.tsx
+        template: nextjs/layout
+      - path: dashboard/app/page.tsx
+        template: nextjs/page
+      - path: dashboard/app/signals/page.tsx
+        template: nextjs/page
+      - path: dashboard/components/Chart.tsx
+        template: react/component
+      - path: dashboard/components/HealthBadge.tsx
+        template: react/component
+      - path: dashboard/components/SubscriptionStatus.tsx
+        template: react/component
+      - path: dashboard/lib/feeds/crypto_ws.ts
+        template: typescript/module
+      - path: dashboard/lib/feeds/forex_rest.ts
+        template: typescript/module
+      - path: dashboard/lib/signals/rules.ts
+        template: typescript/module
+      - path: dashboard/lib/signals/engine.ts
+        template: typescript/module
+      - path: dashboard/lib/signals/backtest.ts
+        template: typescript/module
+      - path: dashboard/lib/billing/stripe.ts
+        template: typescript/module
+      - path: dashboard/lib/billing/crypto.ts
+        template: typescript/module
+      - path: dashboard/pages/api/health.ts
+        template: nextjs/api_route
+      - path: dashboard/pages/api/signals.ts
+        template: nextjs/api_route
+      - path: dashboard/pages/api/webhooks/stripe.ts
+        template: nextjs/api_route
+      - path: dashboard/pages/api/webhooks/crypto.ts
+        template: nextjs/api_route
+      - path: docs/alpha_invite.md
+        template: markdown/doc
+      - path: docs/data_dictionary.md
+        template: markdown/doc
+    ci_additions:
+      - name: aurafx-smoke
+        workflow: .github/workflows/smoke.yml
+        matrix:
+          routes: ["/", "/signals"]
+        steps:
+          - run: node scripts/smoke.js --routes ${{ matrix.routes }}
+
+  - id: saas-studio-template
+    root: templates/saas-studio
+    generators:
+      - path: brand/brand.yml
+        template: yaml/brand
+      - path: brand/lock.json
+        template: json/brand_lock
+      - path: scripts/create-app.ts
+        template: typescript/cli
+      - path: scripts/generate-docs.ts
+        template: typescript/cli
+      - path: scripts/brand-validate.ts
+        template: typescript/cli
+      - path: .github/workflows/ci.yml
+        template: github/ci
+      - path: .github/workflows/smoke.yml
+        template: github/ci_smoke
+      - path: .github/workflows/pr-metrics.yml
+        template: github/ci_metrics
+      - path: apps/landing/pages/index.tsx
+        template: nextjs/page
+      - path: apps/landing/public/logos/.keep
+        template: file/keep
+      - path: apps/dashboard/app/layout.tsx
+        template: nextjs/layout
+      - path: apps/dashboard/app/page.tsx
+        template: nextjs/page
+      - path: docs/handoff_guide.md
+        template: markdown/doc
+      - path: docs/README.template.md
+        template: markdown/doc
+    ci_additions:
+      - name: pr-metrics
+        workflow: .github/workflows/pr-metrics.yml
+        steps:
+          - run: node packages/metrics-bot/run.js
+
+shared_packages:
+  - name: eslint-config
+    path: packages/eslint-config
+    template: node/package
+  - name: tsconfig
+    path: packages/tsconfig
+    template: node/tsconfig
+  - name: ui
+    path: packages/ui
+    template: node/package
+  - name: brand-lint
+    path: packages/brand-lint
+    template: node/package
+  - name: metrics-bot
+    path: packages/metrics-bot
+    template: node/package
+
+env:
+  strategy: examples_only
+  examples:
+    noid:
+      FIREBASE_API_KEY: ""
+      OCR_SERVICE_URL: "http://localhost:8081"
+    aurafx:
+      STRIPE_SECRET_KEY: "sk_test_..."
+      COINBASE_COMMERCE_KEY: ""
+      DATA_FEED_URL: "wss://feed.example"
+
+notes:
+  - Never modify protected landing pages in-place. Use approved zones only.
+  - Prefer preview environments and feature flags for risky changes.
