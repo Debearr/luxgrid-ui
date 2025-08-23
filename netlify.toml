@@ -1,0 +1,4 @@
+# Netlify usually auto-detects Next.js; keep this file minimal or omit it.
+[build]
+  command = "npm run build"
+# No publish dir for SSR; Netlify handles Next.js automatically.
