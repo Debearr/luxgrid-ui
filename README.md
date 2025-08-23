@@ -37,3 +37,9 @@ LuxGrid UI provides Fortune-500 polish, accessibility, and modular components ac
 ---
 
 © 2025 LuxGrid — MIT License
+
+## 🧪 Netlify Fallback Preview
+If Vercel is noisy, trigger a backup preview:
+1) Add two GitHub Secrets: **NETLIFY_AUTH_TOKEN** and **NETLIFY_SITE_ID** (from Netlify dashboard).
+2) Run **Actions → Netlify Preview (fallback) → Run workflow** on your branch.
+3) The job prints a **Preview URL** you can open and share (works with SSR).
