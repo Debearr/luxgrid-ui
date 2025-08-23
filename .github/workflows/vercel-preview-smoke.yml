@@ -1,0 +1,57 @@
+name: Vercel Preview Smoke
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Wait for Vercel Preview Deployment
+        id: wait_vercel
+        uses: patrickedqvist/wait-for-vercel-preview@v1.4.0
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 600
+
+      - name: Set PREVIEW_URL
+        id: seturl
+        run: echo "PREVIEW_URL=${{ steps.wait_vercel.outputs.url }}" >> $GITHUB_ENV
+
+      - name: Show preview URL
+        run: echo "Preview URL: $PREVIEW_URL"
+
+      - name: Smoke test /
+        id: smoke_root
+        run: |
+          set -e
+          code=$(curl -s -o /tmp/root.html -w "%{http_code}" "$PREVIEW_URL/")
+          echo "status=$code" >> $GITHUB_OUTPUT
+          if [ "$code" -ne 200 ]; then exit 1; fi
+
+      - name: Smoke test /api/health
+        id: smoke_health
+        run: |
+          set -e
+          body=$(curl -s "$PREVIEW_URL/api/health")
+          echo "body=$body" >> $GITHUB_OUTPUT
+          echo "$body" | jq -e '.status == "ok"' > /dev/null
+
+      - name: Comment results
+        if: always()
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          message: |
+            Preview URL: ${{ env.PREVIEW_URL }}
+            / status: ${{ steps.smoke_root.outputs.status }}
+            /api/health body: ${{ steps.smoke_health.outputs.body }}

@@ -13,7 +13,9 @@
     "brand:validate": "node automation/brand-check.js",
     "council:run": "node automation/run-council.js",
     "automation:status": "node automation/monitor.js",
-    "rollback": "node automation/rollback.js"
+    "rollback": "node automation/rollback.js",
+    "guard:vercel": "node scripts/enforce-vercel-config.mjs",
+    "prepare": "husky install"
   },
   "dependencies": {
     "next": "^14.2.10",
@@ -25,7 +27,8 @@
   "devDependencies": {
     "jest": "^29.7.0",
     "lighthouse-ci": "^0.13.0",
-    "@types/node": "^20.14.10"
+    "@types/node": "^20.14.10",
+    "husky": "^9.1.3"
   }
 }
 
