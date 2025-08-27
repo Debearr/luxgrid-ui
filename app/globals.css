@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Accessibility defaults */
+:focus { outline: none; }
+:focus-visible { @apply ring-2 ring-blue-400; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Base colors */
+html, body {
+  background-color: #ffffff;
+  color: #0A0E1A;
+}
+
