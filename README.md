@@ -1,6 +1,20 @@
-# LuxGrid UI
+# LuxGrid UI — AuraFX × NØID
 
-Shared React + Tailwind CSS component library for the LuxGrid ecosystem (AuraFX, NØID, NoidLux, PostPilot).
+Shared React + Tailwind CSS component library for the LuxGrid ecosystem (AuraFX, NØID, NoidLux, PostPilot) with **zero-touch deployment** and **Cursor dual-agent workflows**.
+
+## 🖇️ Quick Start — Cursor Dual-Agent
+
+**Fix Mode (Primary):**
+```txt
+Cursor — apply VOAI buckets as minimal diffs + build + PR.
+```
+
+**Dry-Run Mode (Secondary):**
+```txt
+Cursor — preview VOAI buckets as diffs only, no PR.
+```
+
+📚 **Full Documentation:** [Master Workflow Doc](./docs/master-workflow-doc.md) | [Quick Paste Pack](./docs/quick-paste-pack.md)
 
 ---
 
