@@ -1,5 +1,3 @@
-export * from "./colors";
-export * from "./typography";
-export * from "./spacing";
-export * from "./radii";
-export * from "./shadows";
+// Re-export from actual file locations
+export { colors } from "../utils/src/tokens/colors";
+export { Button } from "./src/components/Button";

@@ -1,5 +1,5 @@
 // Re-export tokens
-export * from "./tokens";
+export { colors } from "../../../utils/src/tokens/colors";
 
-// Components
-export { Button } from "./components/Button";
+// Components  
+export { Button } from "../../../tokens/src/components/Button";
