@@ -13,7 +13,12 @@
     "brand:validate": "node automation/brand-check.js",
     "council:run": "node automation/run-council.js",
     "automation:status": "node automation/monitor.js",
-    "rollback": "node automation/rollback.js"
+    "rollback": "node automation/rollback.js",
+    "cursor:standard": "node automation/cursor-oneliners.js standard",
+    "cursor:dry-run": "node automation/cursor-oneliners.js dry-run",
+    "cursor:resume": "node automation/cursor-oneliners.js resume",
+    "cursor:safe-merge": "node automation/cursor-oneliners.js safe-merge",
+    "cursor:rollback": "node automation/cursor-oneliners.js rollback"
   },
   "dependencies": {
     "next": "^14.2.10",
