@@ -36,4 +36,9 @@ LuxGrid UI provides Fortune-500 polish, accessibility, and modular components ac
 
 ---
 
+## Docs
+- Fix Session Starter Prompt: see `docs/fix-session-starter-prompt.md`
+
+---
+
 © 2025 LuxGrid — MIT License
