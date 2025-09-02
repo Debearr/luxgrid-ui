@@ -21,11 +21,7 @@
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false
-}
-
-{
-  "framework": null,
+  "trailingSlash": false,
   "buildCommand": "",
   "installCommand": "",
   "outputDirectory": "public"
