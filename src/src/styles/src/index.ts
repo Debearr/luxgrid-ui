@@ -1,5 +1,5 @@
-// Re-export tokens
-export * from "./tokens";
+// Re-export tokens from design tokens package
+export * from "../../../tokens";
 
-// Components
-export { Button } from "./components/Button";
+// Components: re-export Button from tokens library
+export { Button } from "../../../tokens/src/components/Button";
