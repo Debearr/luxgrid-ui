@@ -1,5 +1,5 @@
 import * as React from "react";
-import { cn } from "../utils/cn";
+import { cn } from "../../../utils/cn";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary" | "ghost";
@@ -22,14 +22,23 @@ const variants: Record<NonNullable<ButtonProps["variant"]>, string> = {
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "primary", size = "md", type = "button", ...props }, ref) => {
+  (
+    { className, variant = "primary", size = "md", type = "button", children, ...props },
+    ref
+  ) => {
+    const ariaLabel = (props as any)["aria-label"] ??
+      (typeof children === "string" ? (children as string) : undefined);
+
     return (
       <button
         ref={ref}
         type={type}
+        aria-label={ariaLabel}
         className={cn(base, sizes[size], variants[variant], className)}
         {...props}
-      />
+      >
+        {children}
+      </button>
     );
   }
 );
