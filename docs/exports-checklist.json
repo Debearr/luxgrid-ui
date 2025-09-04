@@ -1,0 +1,31 @@
+{
+  "platforms": [
+    {
+      "id": "ios",
+      "label": "iOS",
+      "required": [
+        "app_icon_1024.png",
+        "splash_2732x2732.png",
+        "marketing_1242x2688.png"
+      ]
+    },
+    {
+      "id": "android",
+      "label": "Android",
+      "required": [
+        "ic_launcher_512.png",
+        "feature_graphic_1024x500.png",
+        "promo_180x120.png"
+      ]
+    },
+    {
+      "id": "web",
+      "label": "Web",
+      "required": [
+        "og_image_1200x630.png",
+        "favicon_512.png",
+        "hero_1920x1080.png"
+      ]
+    }
+  ]
+}
