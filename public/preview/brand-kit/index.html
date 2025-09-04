@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Brand Kit v2 Preview</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <style>
+      .container { max-width: 1200px; margin: 0 auto; padding: 16px; }
+      h1 { font-size: 1.75rem; margin-bottom: 1rem; }
+      table { width: 100%; border-collapse: collapse; }
+      th, td { border-bottom: 1px solid #e5e7eb; padding: 12px; text-align: left; }
+      th { font-weight: 600; font-size: 0.95rem; color: #374151; }
+      .grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+      .col-head { font-weight: 700; color: #111827; }
+      .platform { font-weight: 600; color: #111827; }
+      .variant { display: flex; gap: 12px; align-items: center; }
+      .img-wrap { width: 160px; height: 160px; border: 1px dashed #d1d5db; display:flex; align-items:center; justify-content:center; background:#fafafa; }
+      .img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; }
+      @media (max-width: 768px) {
+        .grid { grid-template-columns: 1fr; }
+        .img-wrap { width: 100%; height: 200px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Brand Kit v2 Preview — Minimal vs Edgy</h1>
+      <div class="grid" id="grid"></div>
+    </div>
+
+    <script>
+      const platforms = ["LinkedIn","Instagram","Twitter","YouTube","WhatsApp","TikTok"];
+      const variants = ["Minimal","Edgy"];
+      const types = ["Cover","Post","Story","Avatar"]; // extend as needed
+
+      function buildRow(platform) {
+        const row = document.createElement('div');
+        row.style.border = '1px solid #e5e7eb';
+        row.style.borderRadius = '8px';
+        row.style.padding = '12px';
+        row.style.background = '#fff';
+        row.style.boxShadow = '0 1px 2px rgba(0,0,0,0.03)';
+
+        const heading = document.createElement('div');
+        heading.className = 'platform';
+        heading.textContent = platform;
+        heading.style.marginBottom = '8px';
+        row.appendChild(heading);
+
+        const columns = document.createElement('div');
+        columns.className = 'grid';
+
+        variants.forEach(variant => {
+          const col = document.createElement('div');
+          const head = document.createElement('div');
+          head.className = 'col-head';
+          head.textContent = variant;
+          head.style.marginBottom = '8px';
+          col.appendChild(head);
+
+          types.forEach(type => {
+            const wrap = document.createElement('div');
+            wrap.className = 'variant';
+            const imgWrap = document.createElement('div');
+            imgWrap.className = 'img-wrap';
+            const img = document.createElement('img');
+            const filename = `${platform}_${type}_${variant}_v2.png`;
+            img.src = `/assets/brand/social/${platform}/${filename}`;
+            img.alt = `${platform} ${type} ${variant}`;
+            img.onerror = () => { imgWrap.textContent = filename; };
+            imgWrap.appendChild(img);
+            wrap.appendChild(imgWrap);
+            const label = document.createElement('div');
+            label.textContent = type;
+            wrap.appendChild(label);
+            col.appendChild(wrap);
+          });
+
+          columns.appendChild(col);
+        });
+
+        row.appendChild(columns);
+        return row;
+      }
+
+      const grid = document.getElementById('grid');
+      platforms.forEach(p => grid.appendChild(buildRow(p)));
+    </script>
+  </body>
+  </html>
+

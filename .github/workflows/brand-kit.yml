@@ -1,0 +1,39 @@
+name: Brand Kit Packaging
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      - name: Sync assets to public for preview
+        run: npm run brand:sync-public
+
+      - name: Build site
+        run: npm run build
+
+      - name: Export brand kit zip
+        run: npm run export:brand-kit
+
+      - name: Upload artifact brand-kit-v2.zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: brand-kit-v2
+          path: dist/brand-kit-v2.zip
+          if-no-files-found: error
+
