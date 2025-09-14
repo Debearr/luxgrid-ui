@@ -1,16 +1,14 @@
 {
   "version": 2,
-  "framework": "nextjs",
+  "framework": null,
+  "buildCommand": "",
+  "installCommand": "",
+  "outputDirectory": "public",
   "env": {
     "AI_COUNCIL_ENABLED": "true",
     "ZERO_TOUCH_DEPLOY": "true",
     "BRAND_VALIDATION": "true"
   },
-  "routes": [
-    { "src": "/api/auraFX/(.*)", "dest": "/api/auraFX/$1" },
-    { "src": "/api/noid/(.*)", "dest": "/api/noid/$1" },
-    { "src": "/(.*)", "dest": "/$1" }
-  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -22,11 +20,4 @@
   ],
   "cleanUrls": true,
   "trailingSlash": false
-}
-
-{
-  "framework": null,
-  "buildCommand": "",
-  "installCommand": "",
-  "outputDirectory": "public"
 }
