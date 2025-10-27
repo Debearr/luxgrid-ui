@@ -1,0 +1,4 @@
+"task_id","title","status","owner","eta_days"
+"init-1","Initialize pipeline","done","system","0"
+"plan-1","Generate execution plan","done","system","0"
+"deliver-1","Deliver results","done","system","0"
