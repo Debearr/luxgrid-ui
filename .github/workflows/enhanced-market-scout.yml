@@ -1,0 +1,446 @@
+name: Enhanced Market Scout (AI Council Ensemble)
+on:
+  schedule: [{ cron: "0 13 * * 1" }]
+  workflow_dispatch:
+
+jobs:
+  ai-council-scout:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    env:
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          npm install ajv ajv-formats @anthropic-ai/sdk @google/generative-ai axios
+          sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Prepare enhanced prompt system
+        run: |
+          mkdir -p prompts reports data/dashboard schemas scripts
+          cat > schemas/market-scout.schema.json <<'SCHEMA'
+          {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "object",
+            "required": [
+              "timestamp",
+              "executive_brief",
+              "scorecard",
+              "opportunities",
+              "optimizations",
+              "risks",
+              "top_5_actions"
+            ],
+            "properties": {
+              "timestamp": {"type": "string", "format": "date-time"},
+              "executive_brief": {"type": "string", "maxLength": 500},
+              "scorecard": {
+                "type": "object",
+                "required": [
+                  "market_fit",
+                  "product_readiness",
+                  "brand_alignment",
+                  "growth_engine",
+                  "seo_position",
+                  "risk"
+                ],
+                "properties": {
+                  "market_fit": {"type": "number", "minimum": 0, "maximum": 10},
+                  "product_readiness": {"type": "number", "minimum": 0, "maximum": 10},
+                  "brand_alignment": {"type": "number", "minimum": 0, "maximum": 10},
+                  "growth_engine": {"type": "number", "minimum": 0, "maximum": 10},
+                  "seo_position": {"type": "number", "minimum": 0, "maximum": 10},
+                  "risk": {"type": "number", "minimum": 0, "maximum": 10}
+                }
+              },
+              "opportunities": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "title",
+                    "why_now",
+                    "segment",
+                    "expected_impact",
+                    "confidence",
+                    "effort_days"
+                  ],
+                  "properties": {
+                    "title": {"type": "string"},
+                    "why_now": {"type": "string"},
+                    "segment": {"type": "string"},
+                    "expected_impact": {"type": "string", "enum": ["revenue", "retention", "brand", "seo"]},
+                    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+                    "effort_days": {"type": "number", "enum": [1, 3, 5, 10, 20]},
+                    "proofs": {
+                      "type": "array",
+                      "items": {"type": "string"}
+                    }
+                  }
+                }
+              },
+              "optimizations": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["area", "action", "metric", "target", "owner", "eta_days"],
+                  "properties": {
+                    "area": {"type": "string", "enum": ["UX", "Pricing", "Onboarding", "Activation", "Performance", "Messaging"]},
+                    "action": {"type": "string"},
+                    "metric": {"type": "string"},
+                    "target": {"type": "string"},
+                    "owner": {"type": "string"},
+                    "eta_days": {"type": "number", "enum": [1, 3, 5, 10]}
+                  }
+                }
+              },
+              "seo": {
+                "type": "object",
+                "properties": {
+                  "priority_keywords": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["keyword", "intent", "difficulty", "opportunity"],
+                      "properties": {
+                        "keyword": {"type": "string"},
+                        "intent": {"type": "string", "enum": ["transactional", "informational", "navigational"]},
+                        "difficulty": {"type": "number", "minimum": 0, "maximum": 100},
+                        "opportunity": {"type": "string", "enum": ["low", "med", "high"]}
+                      }
+                    }
+                  }
+                }
+              },
+              "social_drip": {
+                "type": "object",
+                "properties": {
+                  "twitter_threads": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "required": ["hook", "beats", "cta"],
+                      "properties": {
+                        "hook": {"type": "string"},
+                        "beats": {"type": "array", "items": {"type": "string"}},
+                        "cta": {"type": "string"}
+                      }
+                    }
+                  }
+                }
+              },
+              "risks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["name", "likelihood", "impact", "mitigation"],
+                  "properties": {
+                    "name": {"type": "string"},
+                    "likelihood": {"type": "string", "enum": ["low", "med", "high"]},
+                    "impact": {"type": "string", "enum": ["low", "med", "high"]},
+                    "mitigation": {"type": "string"}
+                  }
+                }
+              },
+              "top_5_actions": {
+                "type": "array",
+                "maxItems": 5,
+                "items": {
+                  "type": "object",
+                  "required": ["name", "why", "roi", "difficulty", "deadline_days"],
+                  "properties": {
+                    "name": {"type": "string"},
+                    "why": {"type": "string"},
+                    "roi": {"type": "string", "enum": ["low", "med", "high"]},
+                    "difficulty": {"type": "string", "enum": ["easy", "med", "hard"]},
+                    "deadline_days": {"type": "number", "enum": [7, 14, 30]}
+                  }
+                }
+              }
+            }
+          }
+          SCHEMA
+
+      - name: Create AI Council ensemble script
+        run: |
+          cat > scripts/ai-council-ensemble.js <<'SCRIPT'
+          const Anthropic = require('@anthropic-ai/sdk');
+          const { GoogleGenerativeAI } = require('@google/generative-ai');
+          const Ajv = require('ajv');
+          const addFormats = require('ajv-formats');
+          const fs = require('fs');
+          const path = require('path');
+
+          const ajv = new Ajv({ allErrors: true });
+          addFormats(ajv);
+
+          const schema = JSON.parse(fs.readFileSync(path.join(process.cwd(), 'schemas/market-scout.schema.json'), 'utf8'));
+          const validate = ajv.compile(schema);
+
+          const ENHANCED_PROMPT = `
+          SYSTEM ROLE: AI Council – Luxury Tech Growth & Market-Fit Scout
+
+          You are an ensemble of senior operators (product, GTM, finance, brand, ops).
+          Brand tone: premium, elevated, minimalist. No hype. Investor-ready.
+
+          Context: NOID/AuraFX/Noidlux ecosystem - luxury tech platform serving prosumers, creators, high-end SMBs.
+          
+          Current Focus Areas:
+          - Voice-activated AI trading (AuraFX)  
+          - Premium tech-art experiences (NØID)
+          - Luxury lifestyle-tech crossover (Noidlux)
+          - Component library (LuxGrid UI)
+          - Enterprise VC pipeline tools
+
+          Objective: Find optimization opportunities, market gaps, and risks. Prioritize actions that improve market fit, revenue, and brand equity.
+
+          CRITICAL: Output ONLY valid JSON. No surrounding text. Must validate against provided schema.
+
+          Required JSON structure: {
+            "timestamp": "ISO-8601",
+            "executive_brief": "≤120 words executive summary",
+            "scorecard": {
+              "market_fit": 0-10,
+              "product_readiness": 0-10, 
+              "brand_alignment": 0-10,
+              "growth_engine": 0-10,
+              "seo_position": 0-10,
+              "risk": 0-10
+            },
+            "opportunities": [
+              {
+                "title": "Specific opportunity name",
+                "why_now": "Market timing rationale", 
+                "segment": "Target customer segment",
+                "expected_impact": "revenue|retention|brand|seo",
+                "confidence": 0.0-1.0,
+                "effort_days": 1|3|5|10|20,
+                "proofs": ["Evidence or validation methods"]
+              }
+            ],
+            "optimizations": [
+              {
+                "area": "UX|Pricing|Onboarding|Activation|Performance|Messaging", 
+                "action": "Specific action to take",
+                "metric": "How to measure success",
+                "target": "Specific target value",
+                "owner": "Role responsible", 
+                "eta_days": 1|3|5|10
+              }
+            ],
+            "seo": {
+              "priority_keywords": [
+                {
+                  "keyword": "Target keyword",
+                  "intent": "transactional|informational|navigational",
+                  "difficulty": 0-100,
+                  "opportunity": "low|med|high"
+                }
+              ],
+              "content_calendar": [
+                {
+                  "title": "Content piece title",
+                  "angle": "Unique angle/hook", 
+                  "channel": "Blog|Twitter|YouTube|LinkedIn",
+                  "cadence": "weekly|biweekly",
+                  "kpi": "rank|clicks|subscribers|demo-requests"
+                }
+              ]
+            },
+            "social_drip": {
+              "twitter_threads": [
+                {
+                  "hook": "Attention-grabbing opening",
+                  "beats": ["Key point 1", "Key point 2", "Key point 3"],
+                  "cta": "Call to action"
+                }
+              ]
+            },
+            "risks": [
+              {
+                "name": "Risk description", 
+                "likelihood": "low|med|high",
+                "impact": "low|med|high",
+                "mitigation": "How to address"
+              }
+            ],
+            "top_5_actions": [
+              {
+                "name": "Action name",
+                "why": "Business rationale", 
+                "roi": "low|med|high",
+                "difficulty": "easy|med|hard",
+                "deadline_days": 7|14|30
+              }
+            ]
+          }
+
+          Focus on luxury positioning, premium user experience, and enterprise-grade reliability.
+          `;
+
+          async function callClaude() {
+            const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+            const response = await anthropic.messages.create({
+              model: 'claude-3-5-sonnet-20241022',
+              max_tokens: 4000,
+              temperature: 0,
+              messages: [{ role: 'user', content: ENHANCED_PROMPT }]
+            });
+            return response.content[0].text;
+          }
+
+          async function callGemini() {
+            const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+            const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro', generationConfig: { temperature: 0, candidateCount: 1 } });
+            const result = await model.generateContent(ENHANCED_PROMPT);
+            return result.response.text();
+          }
+
+          function fuseInsights(claude, gemini) {
+            const fusedScorecard = {};
+            Object.keys(claude.scorecard).forEach(key => {
+              const g = gemini.scorecard && typeof gemini.scorecard[key] === 'number' ? gemini.scorecard[key] : claude.scorecard[key];
+              fusedScorecard[key] = Math.round((claude.scorecard[key] + g) / 2);
+            });
+            return {
+              ...claude,
+              scorecard: fusedScorecard,
+              opportunities: [...claude.opportunities, ...(gemini.opportunities || [])].slice(0, 8),
+              ensemble_note: 'Fused insights from Claude + Gemini AI Council'
+            };
+          }
+
+          async function ensembleAnalysis() {
+            const timestamp = new Date().toISOString();
+            try {
+              console.log('🤖 Running AI Council ensemble analysis...');
+              console.log('📊 Claude analysis...');
+              const claudeResponse = await callClaude();
+              let claudeData;
+              try {
+                claudeData = JSON.parse(claudeResponse);
+                if (!validate(claudeData)) {
+                  console.warn('⚠️ Claude response validation failed:', validate.errors);
+                  throw new Error('Claude response invalid');
+                }
+                console.log('✅ Claude response validated');
+              } catch (e) {
+                console.error('❌ Claude response parsing failed:', e.message);
+                throw e;
+              }
+
+              let geminiData = null;
+              if (process.env.GEMINI_API_KEY) {
+                try {
+                  console.log('🧠 Gemini analysis...');
+                  const geminiResponse = await callGemini();
+                  geminiData = JSON.parse(geminiResponse);
+                  if (!validate(geminiData)) {
+                    console.warn('⚠️ Gemini response did not validate, skipping fusion');
+                    geminiData = null;
+                  } else {
+                    console.log('✅ Gemini response validated');
+                  }
+                } catch (e) {
+                  console.warn('⚠️ Gemini analysis failed, using Claude only:', e.message);
+                }
+              }
+
+              let finalData = claudeData;
+              if (geminiData) {
+                console.log('🔄 Fusing ensemble insights...');
+                finalData = fuseInsights(claudeData, geminiData);
+              }
+
+              const reportDir = `reports/${timestamp.replace(/[:.]/g, '-')}`;
+              fs.mkdirSync(reportDir, { recursive: true });
+              fs.writeFileSync(`${reportDir}/market-scout.json`, JSON.stringify(finalData, null, 2));
+              fs.mkdirSync(path.join(process.cwd(), 'data', 'dashboard'), { recursive: true });
+              fs.writeFileSync(path.join(process.cwd(), 'data', 'dashboard', 'market.json'), JSON.stringify(finalData, null, 2));
+              console.log(`✅ Market scout analysis complete: ${reportDir}`);
+              return finalData;
+            } catch (error) {
+              console.error('💥 Ensemble analysis failed:', error);
+              throw error;
+            }
+          }
+
+          if (require.main === module) {
+            ensembleAnalysis().catch(console.error);
+          }
+
+          module.exports = { ensembleAnalysis };
+          SCRIPT
+
+      - name: Run AI Council ensemble analysis
+        id: analysis
+        run: |
+          cd scripts
+          TS=$(node -e "console.log(new Date().toISOString().replace(/[:.]/g, '-'))")
+          node ai-council-ensemble.js
+          echo "timestamp=$TS" >> $GITHUB_OUTPUT
+
+      - name: Generate 2-hour quick wins checklist
+        run: |
+          cat > scripts/generate-quickwins.js <<'QUICKWINS'
+          const fs = require('fs');
+          const path = require('path');
+          const dashboardPath = path.join(process.cwd(), 'data', 'dashboard', 'market.json');
+          const data = JSON.parse(fs.readFileSync(dashboardPath, 'utf8'));
+          const quickWins = (data.top_5_actions || [])
+            .filter(action => action.deadline_days <= 7 && action.difficulty === 'easy')
+            .map(action => `- [ ] **${action.name}** (${action.deadline_days}d) - ${action.why}`)
+            .join('\n');
+          const checklist = `# 🚀 2-Hour Quick Wins Checklist\n\nGenerated: ${data.timestamp}\n\n## Immediate Actions (Next 2 Hours)\n${quickWins}\n\n## This Week's Priorities\n${(data.top_5_actions || []).slice(0, 3).map(a => `- [ ] ${a.name} - ${a.why}`).join('\n')}\n\n## Key Metrics to Track\n${(data.optimizations || []).slice(0, 3).map(o => `- ${o.metric}: target ${o.target}`).join('\n')}\n`;
+          console.log(checklist);
+          fs.writeFileSync(path.join(process.cwd(), 'data', 'dashboard', 'quickwins.md'), checklist);
+          QUICKWINS
+          node scripts/generate-quickwins.js
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports data/dashboard
+          git commit -m "feat(market-intel): AI Council ensemble analysis ${{ steps.analysis.outputs.timestamp }}" || echo "No changes to commit"
+          git push
+
+      - name: Create comprehensive GitHub issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+            const dashboardPath = path.join(process.cwd(), 'data', 'dashboard', 'market.json');
+            const data = JSON.parse(fs.readFileSync(dashboardPath, 'utf8'));
+            const quickWins = fs.readFileSync(path.join(process.cwd(), 'data', 'dashboard', 'quickwins.md'), 'utf8');
+            const title = `🚀 Weekly AI Council Report - ${new Date(data.timestamp).toLocaleDateString()}`;
+            const scorecardTable = Object.entries(data.scorecard || {})
+              .map(([key, score]) => `| ${key.replace('_', ' ')} | ${score}/10 | ${'█'.repeat(score)}${'░'.repeat(10-score)} |`)
+              .join('\n');
+            const opportunities = (data.opportunities || []).slice(0, 5)
+              .map((opp, i) => `${i+1}. **${opp.title}** (${opp.segment}) - ${opp.why_now} [Confidence: ${Math.round(opp.confidence*100)}%]`)
+              .join('\n');
+            const body = `\n## 📊 Executive Brief\n${data.executive_brief}\n\n## 🎯 Scorecard\n| Metric | Score | Progress |\n|--------|-------|----------|\n${scorecardTable}\n\n## 🚀 Top Opportunities\n${opportunities}\n\n## ⚡ Quick Wins Checklist\n${quickWins}\n\n## 🔗 Resources\n- Full analysis: \`data/dashboard/market.json\`\n- Dashboard: [/dashboard/market](/dashboard/market)\n- Quick wins: \`data/dashboard/quickwins.md\`\n\n---\n*Generated by AI Council ensemble (Claude + Gemini)*\n`;
+            await github.rest.issues.create({ owner: context.repo.owner, repo: context.repo.repo, title, body, labels: ['market-intel', 'ai-council', 'weekly-report'] });
+
+      - name: Slack notification (optional)
+        if: env.SLACK_WEBHOOK_URL != ''
+        run: |
+          BRIEF=$(jq -r '.executive_brief' data/dashboard/market.json)
+          TOP_ACTION=$(jq -r '.top_5_actions[0].name' data/dashboard/market.json)
+          curl -X POST -H 'Content-type: application/json' --data "{\"text\":\"🤖 **AI Council Weekly Report**\\n\\n${BRIEF}\\n\\n🎯 **Top Priority:** ${TOP_ACTION}\\n\\n📊 Full report in GitHub Issues\"}" "$SLACK_WEBHOOK_URL"
