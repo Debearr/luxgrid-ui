@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://luxgrid.example.com/schemas/oneclick-vc-output.schema.json",
+  "title": "One-Click VC Pipeline Output",
+  "type": "object",
+  "required": [
+    "summary",
+    "scores",
+    "evidence",
+    "executionPlan",
+    "stakeholderDeliverables",
+    "validationGate",
+    "qualityEnforcement"
+  ],
+  "properties": {
+    "summary": { "type": "string", "minLength": 1 },
+    "scores": {
+      "type": "object",
+      "required": ["architecture", "security", "product", "team", "gtm"],
+      "properties": {
+        "architecture": { "type": "number", "minimum": 0, "maximum": 10 },
+        "security": { "type": "number", "minimum": 0, "maximum": 10 },
+        "product": { "type": "number", "minimum": 0, "maximum": 10 },
+        "team": { "type": "number", "minimum": 0, "maximum": 10 },
+        "gtm": { "type": "number", "minimum": 0, "maximum": 10 }
+      },
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["architecture", "security", "product", "team", "gtm"],
+      "properties": {
+        "architecture": { "$ref": "#/definitions/evidenceArray" },
+        "security": { "$ref": "#/definitions/evidenceArray" },
+        "product": { "$ref": "#/definitions/evidenceArray" },
+        "team": { "$ref": "#/definitions/evidenceArray" },
+        "gtm": { "$ref": "#/definitions/evidenceArray" }
+      },
+      "additionalProperties": false
+    },
+    "executionPlan": {
+      "type": "object",
+      "required": ["immediate", "sprint1", "sprint2", "future"],
+      "properties": {
+        "immediate": { "$ref": "#/definitions/executionItems" },
+        "sprint1": { "$ref": "#/definitions/executionItems" },
+        "sprint2": { "$ref": "#/definitions/executionItems" },
+        "future": { "$ref": "#/definitions/executionItems" }
+      },
+      "additionalProperties": false
+    },
+    "stakeholderDeliverables": {
+      "type": "object",
+      "required": ["developers", "product", "investors", "operations"],
+      "properties": {
+        "developers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["file", "line", "todo"],
+            "properties": {
+              "file": { "type": "string" },
+              "line": { "type": "integer", "minimum": 1 },
+              "todo": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "product": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["feature", "impact"],
+            "properties": {
+              "feature": { "type": "string" },
+              "impact": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "investors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["scriptStep", "wow"],
+            "properties": {
+              "scriptStep": { "type": "string" },
+              "wow": { "type": "string" },
+              "advantage": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "operations": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "validationGate": {
+      "type": "object",
+      "required": ["performance", "security", "build", "deploy", "goNoGo"],
+      "properties": {
+        "performance": { "type": "boolean" },
+        "security": { "type": "boolean" },
+        "build": { "type": "boolean" },
+        "deploy": { "type": "boolean" },
+        "goNoGo": { "type": "string", "enum": ["Go", "No-Go"] }
+      },
+      "additionalProperties": false
+    },
+    "qualityEnforcement": {
+      "type": "object",
+      "required": ["specificity", "evidence", "measurability", "actionability"],
+      "properties": {
+        "specificity": { "type": "boolean" },
+        "evidence": { "type": "boolean" },
+        "measurability": { "type": "boolean" },
+        "actionability": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "evidenceArray": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["file", "lines", "snippet"],
+        "properties": {
+          "file": { "type": "string" },
+          "lines": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 1 },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "snippet": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "executionItems": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["title", "files", "expectedROI", "effort", "risk", "eta", "acceptanceCriteria"],
+        "properties": {
+          "title": { "type": "string" },
+          "files": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          },
+          "expectedROI": { "type": "string" },
+          "effort": { "type": "integer", "minimum": 1, "maximum": 5 },
+          "risk": { "type": "string", "enum": ["Low", "Medium", "High"] },
+          "eta": { "type": "string", "minLength": 1 },
+          "acceptanceCriteria": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

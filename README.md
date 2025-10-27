@@ -36,4 +36,16 @@ LuxGrid UI provides Fortune-500 polish, accessibility, and modular components ac
 
 ---
 
+## One-Click VC Pipeline (Evidence-Driven)
+- Prompt template: see `docs/oneclick-vc-pipeline.md` for the evidence-based review, ROI-ranked execution plan, stakeholder deliverables, validation gates, and quality enforcement.
+- Context rules: configured in `.oneclickrc.json` to improve semantic relevance (always-include, business logic, infra, and deprioritized files).
+
+Validate outputs locally:
+- Generate output JSON with your pipeline and save as `output.json`.
+- Run: `npm run vc:validate` to validate against `docs/oneclick-vc-output.schema.json`.
+
+Use the prompt template with your one-click evaluation flow to generate investor-ready, executable outputs.
+
+---
+
 © 2025 LuxGrid — MIT License
