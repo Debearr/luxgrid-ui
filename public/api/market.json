@@ -1,0 +1,142 @@
+{
+  "timestamp": "2025-08-18T13:00:00Z",
+  "executive_brief": "Momentum building in AI-native commerce tooling. Near-term wins in SEO and social proof; medium-term gains from refining onboarding and activating partner channels.",
+  "scorecard": {
+    "market_fit": 7,
+    "product_readiness": 6,
+    "brand_alignment": 8,
+    "growth_engine": 6,
+    "seo_position": 5,
+    "risk": 3
+  },
+  "opportunities": [
+    {
+      "title": "Launch comparison pages for top alternatives",
+      "why_now": "Competitors rank on high-intent alt keywords; low content depth.",
+      "segment": "SEO",
+      "expected_impact": "medium",
+      "confidence": 0.72,
+      "effort_days": 3
+    },
+    {
+      "title": "Ship 1-click onboarding presets",
+      "why_now": "New users drop on step 2; presets remove friction.",
+      "segment": "Activation",
+      "expected_impact": "high",
+      "confidence": 0.68,
+      "effort_days": 5
+    },
+    {
+      "title": "Founders' narrative Twitter thread series",
+      "why_now": "Earned media favors personal POV; leverage recent case studies.",
+      "segment": "Social",
+      "expected_impact": "medium",
+      "confidence": 0.64,
+      "effort_days": 2
+    },
+    {
+      "title": "Partner co-marketing webinar",
+      "why_now": "Partner is shipping complementary feature; joint audience overlap.",
+      "segment": "Partnerships",
+      "expected_impact": "high",
+      "confidence": 0.6,
+      "effort_days": 4
+    },
+    {
+      "title": "Docs quick-start refresh",
+      "why_now": "Top complaint: unclear getting started; reduce time-to-value.",
+      "segment": "Docs",
+      "expected_impact": "medium",
+      "confidence": 0.7,
+      "effort_days": 2
+    },
+    {
+      "title": "Referral program pilot",
+      "why_now": "Active user base ready; cheap new-user channel.",
+      "segment": "Growth",
+      "expected_impact": "medium",
+      "confidence": 0.55,
+      "effort_days": 5
+    }
+  ],
+  "top_5_actions": [
+    {
+      "name": "Create 3 alt-keyword comparison pages",
+      "why": "Capture high-intent organic traffic and accelerate trust.",
+      "roi": "high",
+      "difficulty": "easy",
+      "deadline_days": 5
+    },
+    {
+      "name": "Implement onboarding presets",
+      "why": "Cut activation friction and lift D1 completion rate.",
+      "roi": "high",
+      "difficulty": "med",
+      "deadline_days": 10
+    },
+    {
+      "name": "Schedule partner webinar",
+      "why": "Leverage partner audience and share credibility.",
+      "roi": "med",
+      "difficulty": "easy",
+      "deadline_days": 6
+    },
+    {
+      "name": "Publish 2 founder threads",
+      "why": "Organic reach + narrative resonance.",
+      "roi": "med",
+      "difficulty": "easy",
+      "deadline_days": 3
+    },
+    {
+      "name": "Refresh quick-start doc",
+      "why": "Shorter time-to-value reduces early churn.",
+      "roi": "med",
+      "difficulty": "easy",
+      "deadline_days": 7
+    }
+  ],
+  "seo": {
+    "priority_keywords": [
+      { "keyword": "best ai email tool", "intent": "commercial", "difficulty": 38, "opportunity": "high" },
+      { "keyword": "[brand] alternative", "intent": "commercial", "difficulty": 32, "opportunity": "high" },
+      { "keyword": "ai onboarding presets", "intent": "informational", "difficulty": 27, "opportunity": "med" },
+      { "keyword": "commerce ai workflows", "intent": "informational", "difficulty": 41, "opportunity": "med" },
+      { "keyword": "ai marketing toolkit", "intent": "informational", "difficulty": 44, "opportunity": "med" },
+      { "keyword": "customer activation ai", "intent": "informational", "difficulty": 29, "opportunity": "high" }
+    ]
+  },
+  "social_drip": {
+    "twitter_threads": [
+      {
+        "hook": "The forgotten growth lever: post-purchase moments",
+        "beats": [
+          "Why post-purchase is underutilized",
+          "3 automated sequences that drive 20-30% more LTV",
+          "How to set up in under 1 hour"
+        ],
+        "cta": "Reply 'PLAYBOOK' and I'll DM the template"
+      },
+      {
+        "hook": "What we learned from 20 onboarding sessions",
+        "beats": [
+          "The 2 screens that cause 70% of drop-off",
+          "Presets vs. custom: the 80/20",
+          "One question that doubles activation"
+        ],
+        "cta": "Steal our checklist (no email)"
+      },
+      {
+        "hook": "SEO for tiny teams: win with intent, not volume",
+        "beats": [
+          "Skip crowded head terms",
+          "Own comparison + alt-intent pages",
+          "Update monthly with real quotes"
+        ],
+        "cta": "I'll share our Notion tracker if you want it"
+      }
+    ]
+  },
+  "ensemble_note": "Consensus: focus on high-intent pages and onboarding presets this week; revisit paid next cycle."
+}
+
