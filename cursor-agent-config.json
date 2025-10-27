@@ -1,0 +1,100 @@
+{
+  "agent_name": "AuraFX_NOID_Council",
+  "description": "AI Council for AuraFX × NØID ecosystem deployment and optimization",
+  "version": "1.0.0",
+  "capabilities": [
+    "automated_deployment",
+    "performance_monitoring",
+    "code_optimization",
+    "architecture_validation"
+  ],
+  "workflow_config": {
+    "triggers": [
+      "file_change",
+      "git_commit",
+      "performance_threshold",
+      "error_detection"
+    ],
+    "automated_tasks": {
+      "code_analysis": {
+        "prompt": "You are the Cursor Agent for AuraFX × NØID ecosystem. Analyze this code change for: 1) Performance impact 2) Architecture compliance 3) Security vulnerabilities 4) Deployment readiness. Provide automated fixes where possible.",
+        "auto_fix": true,
+        "confidence_threshold": 0.8
+      },
+      "deployment_validation": {
+        "prompt": "Validate deployment readiness for AuraFX × NØID. Check: 1) All tests passing 2) Performance benchmarks met 3) Security compliance 4) API compatibility. Auto-deploy if all checks pass.",
+        "auto_deploy": true,
+        "rollback_enabled": true
+      },
+      "performance_monitoring": {
+        "prompt": "Monitor AuraFX × NØID performance metrics. Alert on: 1) Response time > 200ms 2) Error rate > 1% 3) Memory usage > 80% 4) API rate limits approached. Implement auto-scaling if needed.",
+        "auto_scale": true,
+        "alert_thresholds": {
+          "response_time": 200,
+          "error_rate": 0.01,
+          "memory_usage": 0.8
+        }
+      }
+    }
+  },
+  "integration_settings": {
+    "github": {
+      "auto_commit": true,
+      "branch_protection": true,
+      "pr_automation": true
+    },
+    "vercel": {
+      "auto_deploy": true,
+      "preview_deployments": true,
+      "production_gates": [
+        "tests_pass",
+        "security_scan",
+        "performance_check"
+      ]
+    },
+    "monitoring": {
+      "sentry": true,
+      "datadog": false,
+      "custom_metrics": [
+        "user_engagement",
+        "trading_accuracy",
+        "driver_efficiency"
+      ]
+    }
+  },
+  "council_seats": {
+    "market_intelligence": {
+      "agent_id": "perplexity_integration",
+      "schedule": "weekly",
+      "auto_report": true
+    },
+    "architecture_validation": {
+      "agent_id": "gemini_integration",
+      "schedule": "on_commit",
+      "auto_fix": true
+    },
+    "deployment_execution": {
+      "agent_id": "copilot_integration",
+      "schedule": "on_merge",
+      "auto_deploy": true
+    },
+    "performance_guardian": {
+      "agent_id": "deepseek_integration",
+      "schedule": "continuous",
+      "auto_optimize": true
+    }
+  },
+  "brand_optimization": {
+    "luxury_metrics": {
+      "ui_consistency": true,
+      "animation_performance": true,
+      "brand_compliance": true
+    },
+    "street_edge_validation": {
+      "accessibility": true,
+      "mobile_first": true,
+      "performance_priority": true
+    }
+  }
+}
+
